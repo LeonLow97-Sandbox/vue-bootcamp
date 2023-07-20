@@ -8,4 +8,4 @@
 
 - Go to `www.google.com`
 - Type `Vue.js devtools` and add the chrome extension.
-- Open Chrome Devtools and look for 'Vue'. This shows the component hierarchy.
+- Open Chrome Devtools and look for 'Vue'. This shows the component hierarchy and provides debugging support.
