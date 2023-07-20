@@ -28,3 +28,15 @@ h1 {
 }
 </style>
 ```
+
+## Different ways to render a component
+
+- They are render the component in the same way.
+
+```js
+  <MainNav />
+  <MainNav></MainNav>
+  <main-nav />
+  <main-nav></main-nav>
+```
+

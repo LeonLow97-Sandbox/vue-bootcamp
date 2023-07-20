@@ -1,6 +1,5 @@
 <template>
-  <MainNav />
-  <MainNav></MainNav>
+  <main-nav />
 </template>
 
 <script>
