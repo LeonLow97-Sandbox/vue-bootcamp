@@ -1,16 +1,15 @@
 <template>
-  <div class="wrapper">
-    <h1>Hello, I'm in App.vue</h1>
-    <HelloWorld msg="You did it!" />
-  </div>
+  <MainNav />
+  <MainNav></MainNav>
 </template>
 
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+<script>
+import MainNav from '@/components/MainNav.vue'
 
-<style scoped>
-h1 {
-  color: red;
+export default {
+  name: 'App',
+  components: {
+    MainNav
+  }
 }
-</style>
+</script>
