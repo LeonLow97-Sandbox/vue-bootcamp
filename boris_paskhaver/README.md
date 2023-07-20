@@ -6,3 +6,9 @@
 - Coverage of front end tools like Vite, TailswindCSS and TypeScript.
 - Project similar to `careers.google.com`
 
+## Mounting the Vue App
+
+```js
+<div id="app"></div>
+```
+
