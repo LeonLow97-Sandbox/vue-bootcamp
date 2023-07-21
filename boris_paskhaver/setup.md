@@ -56,3 +56,44 @@ module.exports = {
 - In `package.json`:
   - `"test:unit": "vitest --environment jsdom --coverage",`
 - Run `npm run test:unit` and terminal will prompt to install `@vitest/coverage-v8`. Hit 'Y'.
+
+## Making Vitest `describe`, `it`, `expect` global
+
+- Go to `vite.config.js`
+
+```js
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  // add this
+  test: {
+    globals: true,
+  },
+});
+```
+- Run `npm install --save-dev eslint-plugin-vitest-globals`
+- In `.eslintrc.cjs`, add
+
+```js
+require('@rushstack/eslint-patch/modern-module-resolution')
+
+module.exports = {
+  root: true,
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    '@vue/eslint-config-prettier/skip-formatting',
+    "plugin:vitest-globals/recommended" // add this
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest'
+  },
+  env: {
+    "vitest-globals/env": true // add this
+  }
+}
+```
