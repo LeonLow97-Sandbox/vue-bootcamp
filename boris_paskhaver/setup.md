@@ -50,3 +50,9 @@ module.exports = {
   - `.test.js` or `.spec.js`
 - To run the test
   - `npm run test:unit`
+
+## Vitest Unit Test Coverage
+
+- In `package.json`:
+  - `"test:unit": "vitest --environment jsdom --coverage",`
+- Run `npm run test:unit` and terminal will prompt to install `@vitest/coverage-v8`. Hit 'Y'.

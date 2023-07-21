@@ -29,3 +29,23 @@
 - `describe`: This function used to **group together related test cases**, providing a way to organize and categorize tests. It takes 2 arguments - the description of the test suite and a callback function containing the individual test cases (`it` blocks) within that suite.
 - `it`: This function represents an **individual test case**. It takes 2 arguments - the description of the test and a callback function that contains the actual test logic, including assertions using `expect`.
 - `expect`: This is an **assertion** library method used to define expectations in the test cases. It allows you to check whether a certain condition is met during the execution of the test. Commonly used methods with `expect` include `toBe`, `toEqual`, `toBeTruthy`, `toBeFalsy`, `toContain`, `toThrow`, etc.
+
+## Test-Driven Development (TDD)
+
+1. Write Tests first.
+2. Write the implementation code that makes the test pass.
+3. Improve code without changing its underlying purpose as you can run the tests to check that the code still works.
+
+---
+
+#### Benefits
+
+1. Ensure you are testing the right thing.
+2. Avoid duplication of tests.
+3. Describe the "why" rather than the implementation.
+4. Higher test coverage.
+5. Makes code easy to refactor. If you make changes to your code, you can run the tests to check if the code is still behaving as it should.
+6. Leads to higher-quality tests and implementation code.
+
+---
+
