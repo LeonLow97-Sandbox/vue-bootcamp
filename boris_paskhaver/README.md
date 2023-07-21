@@ -23,9 +23,9 @@
 
 ```html
 <style scoped>
-h1 {
-  color: red;
-}
+  h1 {
+    color: red;
+  }
 </style>
 ```
 
@@ -40,3 +40,31 @@ h1 {
   <main-nav></main-nav>
 ```
 
+## `name` property
+
+- Defines the component's name.
+
+```html
+<script>
+  export default {
+    name: 'MainNav',
+  };
+</script>
+```
+
+## Rendering Data to View
+
+- `data()` function is used to define the data properties for a component.
+- In this example, it defines a single data property called `company` with the value `'Leon Careers'`, which can be accessed and rendered in the component's template or methods.
+
+```js
+<template>
+  <a href="/">{{ company }}</a>
+</template>
+
+data() {
+  return {
+    company: 'Leon Careers'
+  }
+}
+```
