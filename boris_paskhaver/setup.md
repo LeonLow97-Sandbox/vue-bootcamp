@@ -22,20 +22,19 @@
 
 ```js
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme")
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts}'],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Open Sans", ...defaultTheme.fontFamily.sans]
-      }
-    }
+        sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
-  plugins: []
-}
-
+  plugins: [],
+};
 ```
 
 ## Prettier Plugin for tailwind
@@ -43,3 +42,11 @@ module.exports = {
 - `npm install --save-dev prettier-plugin-tailwindcss`
   - to follow convention of writing tailwindcss
 
+## Vitest
+
+- Ensure `package.json` has this:
+  - `"test:unit": "vitest --environment jsdom",`
+- Test file must end with
+  - `.test.js` or `.spec.js`
+- To run the test
+  - `npm run test:unit`
