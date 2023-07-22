@@ -26,7 +26,7 @@ export default {
 ## `v-for` Directive
 
 - Need to bind a unique value to the `key` attribute in a `v-for` to enable Vue to differentiate between the elements.
-- Can configure Tailwind utility classes that apply a style to only the *first child* element in a group.
+- Can configure Tailwind utility classes that apply a style to only the _first child_ element in a group.
 
 ```js
 <li v-for="menuItem in menuItems" :key="menuItem" class="ml-9 h-full">
@@ -37,6 +37,7 @@ menuItems: ['Teams', 'Locations', 'Life at Leon Careers', 'How we Hire', 'Studen
 ```
 
 ---
+
 #### Using tailwind's first child utility class
 
 - Applies margin-left 0 to the first element in the `v-for` loop
@@ -44,4 +45,38 @@ menuItems: ['Teams', 'Locations', 'Life at Leon Careers', 'How we Hire', 'Studen
 ```js
 class="first:ml-0 ml-9 h-full"
 ```
+
 ---
+
+## `v-if` Directive
+
+- Conditionally render a part of the template.
+
+```js
+<ActionButton v-if="false" />
+```
+
+## `v-else` Directive
+
+```js
+<ProfileImage v-if="isLoggedIn" />
+<ActionButton v-else />
+```
+
+## `v-on` Directive
+
+```js
+v-on:click="handleClick"
+@click="handleClick" // this syntax works too
+
+<script>
+export default {
+  name: 'ActionButton',
+  methods: {
+    handleClick() {
+      console.log('I have been clicked!')
+    }
+  }
+}
+</script>
+```

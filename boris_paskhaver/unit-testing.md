@@ -94,16 +94,17 @@ render(MainNav, {
 
 - `screen` object to query/search the DOM for elements in various ways (by role, by text, by label, etc).
 
-|   Methods   | Description                                          |
-| :---------: | ---------------------------------------------------- |
-|   `getBy`   | Searches for 1 HTML element with the given criteria. |
-| `getByText` | Search by text.                                      |
+|   Methods   | Description                                                                                                  |
+| :---------: | ------------------------------------------------------------------------------------------------------------ |
+|   `getBy`   | Searches for 1 HTML element with the given criteria. Vue Testing Library recommends `getByRole` if possible. |
+| `getByText` | Search by text.                                                                                              |
+| `getAllBy`  | Returns an array of all matching elements based on some criteria.                                            |
 
 ## Unit Testing of ARIA Roles
 
 ```js
 it('displays menu items for navigation', () => {
-  render(MainNav)
-  screen.getAllByRole("listitem")
-})
+  render(MainNav);
+  screen.getAllByRole('listitem');
+});
 ```
