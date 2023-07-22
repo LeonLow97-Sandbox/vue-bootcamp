@@ -93,12 +93,14 @@ render(MainNav, {
 ## `screen`
 
 - `screen` object to query/search the DOM for elements in various ways (by role, by text, by label, etc).
+- The second argument to a `screen` method is an object where we can customize the search criteria. Usually use `name`
 
 |   Methods   | Description                                                                                                  |
 | :---------: | ------------------------------------------------------------------------------------------------------------ |
-|   `getBy`   | Searches for 1 HTML element with the given criteria. Vue Testing Library recommends `getByRole` if possible. |
+|   `getBy`   | Searches for 1 HTML element with the given criteria. Vue Testing Library recommends `getByRole` if possible. Raises an error if not found. |
 | `getByText` | Search by text.                                                                                              |
 | `getAllBy`  | Returns an array of all matching elements based on some criteria.                                            |
+|`queryBy`|Return `null` if an element cannot be found. |
 
 ## Unit Testing of ARIA Roles
 
@@ -107,4 +109,30 @@ it('displays menu items for navigation', () => {
   render(MainNav);
   screen.getAllByRole('listitem');
 });
+```
+
+## `userEvent` object
+
+- The `userEvent` object from `@testing-library/user-event` simulates user events on the virtual DOM used by Vue Testing Library. Its methods represent the events.
+- The event methods are *asynchronous*. They return a Promise. Use `async/await` syntax for the `it` function.
+
+```js
+it('displays user profile picture', async () => {
+  render(MainNav)
+
+  let profileImage = screen.queryByRole('img', {
+    name: /user profile image/i
+  })
+  expect(profileImage).not.toBeInTheDocument()
+
+  const loginButton = screen.getByRole('button', {
+    name: /sign in/i
+  })
+  await userEvent.click(loginButton) // simulating login button click with await
+
+  profileImage = screen.getByRole('img', {
+    name: /user profile image/i
+  })
+  expect(profileImage).toBeInTheDocument()
+})
 ```

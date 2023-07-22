@@ -85,3 +85,9 @@ data() {
 - ARIA roles are added to HTML elements using `role="role type"`, where *role type* is the name of a role in the ARIA specification.
 - Some roles require the inclusion of associated ARIA states or properties, others are valid in association with other roles.
 ---
+
+## Component Methods
+
+- Can attach **methods** to our component.
+- The methods can access "data" properties via the `this` keyword.
+- Vue re-renders a component template whenever a piece of `data` changes.

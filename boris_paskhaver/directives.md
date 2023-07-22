@@ -58,12 +58,19 @@ class="first:ml-0 ml-9 h-full"
 
 ## `v-else` Directive
 
+- Renders a chunk of HTML if the `v-if` directive evaluates to false.
+
 ```js
 <ProfileImage v-if="isLoggedIn" />
 <ActionButton v-else />
 ```
 
 ## `v-on` Directive
+
+- `v-on` directive declares a method for Vue to invoke whenever an event occurs. For example, `v-on:click` will react to a user click.
+- `@` is a shortcut for `v-on`. For example, we can write `@click` instead of `v-on:click`.
+- Don't invoke the `v-on` method, Vue will run it automatically.
+- Vue passes an event object to a `v-on` method whenever it invokes it. The event object includes information/metadata about the event.
 
 ```js
 v-on:click="handleClick"
