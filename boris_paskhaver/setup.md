@@ -51,6 +51,32 @@ module.exports = {
 - To run the test
   - `npm run test:unit`
 
+## Vue Testing Library
+
+- `npm install --save-dev @testing-library/vue @testing-library/jest-dom @testing-library/user-event`
+- Create a `setup.js` in the root directory of your project
+
+```js
+import { cleanup } from '@testing-library/vue';
+import matchers from '@testing-library/jest-dom/matchers';
+import { expect, afterEach } from 'vitest';
+
+expect.extend(matchers);
+
+afterEach(() => {
+  cleanup();
+});
+```
+
+- Include it in `vite.config.js`
+
+```js
+test: {
+  globals: true,
+  setupFiles: ["./tests/setup.js"]
+}
+```
+
 ## Vitest Unit Test Coverage
 
 - In `package.json`:
@@ -75,11 +101,12 @@ export default defineConfig({
   },
 });
 ```
+
 - Run `npm install --save-dev eslint-plugin-vitest-globals`
 - In `.eslintrc.cjs`, add
 
 ```js
-require('@rushstack/eslint-patch/modern-module-resolution')
+require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
   root: true,
@@ -87,13 +114,13 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/eslint-config-prettier/skip-formatting',
-    "plugin:vitest-globals/recommended" // add this
+    'plugin:vitest-globals/recommended', // add this
   ],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: 'latest',
   },
   env: {
-    "vitest-globals/env": true // add this
-  }
-}
+    'vitest-globals/env': true, // add this
+  },
+};
 ```
