@@ -68,3 +68,20 @@ data() {
   }
 }
 ```
+
+## ARIA Roles
+
+- **Accessibility** means designing websites/apps to be capable of being used by as many people as possible.
+- Users of our application may not be able to use a mouse or a keyboard. Users may be using a screen reader or another assistive technology to parse the website.
+- Examples of Accessibility:
+  - The `alt` tag provides context to users who may have visual impairments. It also helps all users if the image fails to load for some reason (server's down, slow connection, etc).
+  - A **responsive design** ensures users on different devices (desktop computers, phones, tablets) can use our website.
+
+---
+#### WAI-ARIA Roles
+
+- By default, many semantic elements in HTML have a role. For example, `<input type="radio">` has the "radio" role.
+- Non-semantic elements in HTML do not have a role; `<div>` and `<span>` without added semantics return `null`. The `role` attribute can provide semantics.
+- ARIA roles are added to HTML elements using `role="role type"`, where *role type* is the name of a role in the ARIA specification.
+- Some roles require the inclusion of associated ARIA states or properties, others are valid in association with other roles.
+---

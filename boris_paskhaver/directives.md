@@ -33,3 +33,13 @@ export default {
 
 menuItems: ['Teams', 'Locations', 'Life at Leon Careers', 'How we Hire', 'Students', 'Jobs']
 ```
+
+---
+#### Using tailwind's first child utility class
+
+- Applies margin-left 0 to the first element in the `v-for` loop
+
+```js
+class="first:ml-0 ml-9 h-full"
+```
+---
