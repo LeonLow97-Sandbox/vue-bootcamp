@@ -125,3 +125,8 @@ module.exports = {
   },
 };
 ```
+
+## Testing Playground Chrome Extension
+
+- Go to Google and search for `Testing playground chrome extension` and add this extension.
+- Open DevTools and it will be there.

@@ -98,3 +98,12 @@ render(MainNav, {
 | :---------: | ---------------------------------------------------- |
 |   `getBy`   | Searches for 1 HTML element with the given criteria. |
 | `getByText` | Search by text.                                      |
+
+## Unit Testing of ARIA Roles
+
+```js
+it('displays menu items for navigation', () => {
+  render(MainNav)
+  screen.getAllByRole("listitem")
+})
+```

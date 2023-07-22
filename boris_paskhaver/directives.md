@@ -3,6 +3,7 @@
 ## `v-bind` Directive
 
 - Binding a HTML attribute to a piece of data in the component.
+- Use `:attr` as a shortcut to `v-bind:attr`.
 
 ```js
 <a v-bind:href="url">Leon Careers</a>;
@@ -24,7 +25,8 @@ export default {
 
 ## `v-for` Directive
 
-- Always have a `key` attribute when using `v-for`. why?
+- Need to bind a unique value to the `key` attribute in a `v-for` to enable Vue to differentiate between the elements.
+- Can configure Tailwind utility classes that apply a style to only the *first child* element in a group.
 
 ```js
 <li v-for="menuItem in menuItems" :key="menuItem" class="ml-9 h-full">
