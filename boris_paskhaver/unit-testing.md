@@ -12,7 +12,7 @@
 - Vue Testing Library
   - For testing the rendering of components.
   - Wraps Vue Test Utils and DOM Testing Library under the hood
-  - Simulating a virtual browser without actually using the actual browser.
+  - Allows us to mount and interact with Vue components in a simulated browser environment.
 
 ## What is unit test?
 
@@ -49,3 +49,52 @@
 
 ---
 
+## Vue Testing Library
+
+```js
+import { render, screen } from '@testing-library/vue';
+
+import MainNav from '@/components/MainNav.vue';
+
+describe('MainNav', () => {
+  it('displays company name', () => {
+    render(MainNav);
+    screen.debug();
+  });
+});
+```
+
+- `render` function is used to **render a Vue component for testing purposes** to a virtual DOM, allowing you to interact with and inspect the component's rendered output and behavior.
+- `screen` is an object that contains various utility methods for querying and interacting with the rendered component's elements, such as `screen.debug()` which prints the component's current DOM structure to the console for debugging purposes.
+
+## Vue Testing Components
+
+```js
+render(MainNav);
+const companyName = screen.getByText('Leon Careers');
+expect(companyName).toBeInTheDocument(); // querying that the company name is in the DOM
+```
+
+- Rendering the expected company name and ensuring it is displayed in the virtual HTML DOM.
+
+```js
+render(MainNav, {
+  data() {
+    return {
+      company: 'Super Corp',
+    };
+  },
+});
+```
+
+- NOT RECOMMENDED
+- Optional to customize certain aspects of the component (e.g.,companyName value) in the second argument of the `render` function.
+
+## `screen`
+
+- `screen` object to query/search the DOM for elements in various ways (by role, by text, by label, etc).
+
+|   Methods   | Description                                          |
+| :---------: | ---------------------------------------------------- |
+|   `getBy`   | Searches for 1 HTML element with the given criteria. |
+| `getByText` | Search by text.                                      |
