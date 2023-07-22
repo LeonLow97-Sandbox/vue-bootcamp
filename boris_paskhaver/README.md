@@ -68,25 +68,3 @@ data() {
   }
 }
 ```
-
-## `v-bind` Directive
-
-- Binding a HTML attribute to a piece of data in the component.
-
-```js
-<a v-bind:href="url">Leon Careers</a>;
-
-export default {
-  name: 'MainNav',
-  data() {
-    return {
-      url: 'https://careers.google.com',
-    };
-  },
-};
-```
-
-```js
-// Another way to avoid eslint violation, just add a colon (recommended)
-<a :href="url">Leon Careers</a>;
-```
