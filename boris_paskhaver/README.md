@@ -78,12 +78,14 @@ data() {
   - A **responsive design** ensures users on different devices (desktop computers, phones, tablets) can use our website.
 
 ---
+
 #### WAI-ARIA Roles
 
 - By default, many semantic elements in HTML have a role. For example, `<input type="radio">` has the "radio" role.
 - Non-semantic elements in HTML do not have a role; `<div>` and `<span>` without added semantics return `null`. The `role` attribute can provide semantics.
-- ARIA roles are added to HTML elements using `role="role type"`, where *role type* is the name of a role in the ARIA specification.
+- ARIA roles are added to HTML elements using `role="role type"`, where _role type_ is the name of a role in the ARIA specification.
 - Some roles require the inclusion of associated ARIA states or properties, others are valid in association with other roles.
+
 ---
 
 ## Component Methods
@@ -91,3 +93,29 @@ data() {
 - Can attach **methods** to our component.
 - The methods can access "data" properties via the `this` keyword.
 - Vue re-renders a component template whenever a piece of `data` changes.
+
+## Passing Props
+
+- Passing data from parent component to child components.
+
+```js
+// ParentComponent
+<div>
+  <ActionButton text="Sign In" @click="loginUser" />
+</div>
+
+// Child Component
+<template>
+  <button>
+    {{ text }}
+  </button>
+</template>
+
+<script>
+export default {
+  name: 'ActionButton',
+  props: ['text']
+}
+</script>
+```
+
