@@ -97,6 +97,7 @@ data() {
 ## Passing Props
 
 - Passing data from parent component to child components.
+- To pass in a **boolean**/array/object/... value as prop, use the v-bind syntax `:is-primary="false"`. If it is a string, then don't need to use `v-bind`.
 
 ```js
 // ParentComponent
@@ -119,3 +120,32 @@ export default {
 </script>
 ```
 
+## `computed` property
+
+- Used to define properties in a component that are calculated based on other data properties.
+- Create reactive properties that automatically update whenever their dependent properties change.
+- In this example, we are using a reusable button component where you can customize the looks of the button by passing in props into the Button component.
+
+```js
+// ParentComponent
+<ActionButton text="Sign In" type="primary" @click="loginUser" />
+
+// ChildComponent
+<template>
+  <button :class="buttonClass">
+    {{ text }}
+  </button>
+</template>
+
+<script>
+export default {
+  name: 'ActionButton',
+  props: ['text', 'type'],
+  computed: {
+    buttonClass() {
+      return { primary: this.type === 'primary', secondary: this.type === 'secondary' }
+    }
+  }
+}
+</script>
+```
