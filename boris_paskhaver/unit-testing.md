@@ -136,3 +136,21 @@ it('displays user profile picture', async () => {
   expect(profileImage).toBeInTheDocument()
 })
 ```
+
+## Unit Testing on CSS classes
+
+```js
+  it('applies one of several styles to button', () => {
+    render(ActionButton, {
+      props: {
+        text: 'Click Me',
+        type: 'primary'
+      }
+    })
+
+    const button = screen.getByRole('button', {
+      name: /Click Me/i
+    })
+    expect(button).toHaveClass('primary') // testing CSS class name
+  })
+```
