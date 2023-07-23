@@ -15,7 +15,10 @@ export default {
     type: {
       type: String,
       required: false,
-      default: "primary" // if parent component does not provide
+      default: 'primary', // if parent component does not provide
+      validator(value) {
+        return ['primary', 'secondary'].includes(value)
+      }
     }
   },
   computed: {
