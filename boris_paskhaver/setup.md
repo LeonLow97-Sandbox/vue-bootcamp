@@ -150,3 +150,11 @@ library.add(faSearch)
 
 createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
 ```
+
+- Including the icon in component
+
+```js
+<div>
+  <font-awesome-icon :icon="['fas', 'search']" class="mr-3" />
+</div>
+```

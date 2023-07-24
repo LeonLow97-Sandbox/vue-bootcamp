@@ -155,3 +155,27 @@ it('displays user profile picture', async () => {
     expect(button).toHaveClass('primary') // testing CSS class name
   })
 ```
+
+## [Vue Warn]: Failed to resolve component
+
+- Vue throws this error because it does not know what font-awesome-icon package is. 
+- Have to use **stubs** to act as a replacement which is something lightweight by Vue Testing Library.
+
+```
+[Vue warn]: Failed to resolve component: font-awesome-icon
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
+  at <TheSubnav key=0 > 
+  at <MainNav ref="VTU_COMPONENT" > 
+  at <VTUROOT>
+```
+
+```js
+// Stubbing the FontAwesomeIcon by giving the `render()` function a second argument
+render(TheSubnav, {
+  global: {
+    stubs: {
+      FontAwesomeIcon: true
+    }
+  },
+})
+```

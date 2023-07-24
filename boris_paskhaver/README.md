@@ -180,3 +180,22 @@ computed: {
 
 - Can add validation to our prop such as the data type, optional/required, and a default value. Vue will inform us of violations in the browser console. Tests will sometimes catch violations too.
 - Add the `validator` method to a prop validation object to validate custom business logic.
+
+## Global Components
+
+- E.g., font awesome icons
+- Global components can be used in any Vue component. We do not need to import them and register them locally.
+- Be careful with global components, as they can increase your bundle size.
+- Font Awesome is a collection of free icons.
+
+## Rendering Font Awesome Icon
+
+- We rendered a `<font-awesome-icon> component and used` its `icon` prop to customize the actual icon.
+- Use a `v-bind` directive whenever passing a prop value that is **not a string**.
+
+---
+#### Testing
+
+- A stub is a replacement or stand-in for a real component. Can use it to simplify tests by focusing on the component under test.
+- Can tell Vue Testing Library which to stub out global components. We used this technique to stub out the `FontAwesomeIcon` component.
+---
