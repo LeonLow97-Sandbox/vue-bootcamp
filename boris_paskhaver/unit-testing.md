@@ -101,6 +101,7 @@ render(MainNav, {
 | `getByText` | Search by text.                                                                                              |
 | `getAllBy`  | Returns an array of all matching elements based on some criteria.                                            |
 |`queryBy`|Return `null` if an element cannot be found. |
+|`toHaveClass`|Verifies that a DOM node has a specific CSS class attached to it.|
 
 ## Unit Testing of ARIA Roles
 

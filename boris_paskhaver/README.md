@@ -98,6 +98,8 @@ data() {
 
 - Passing data from parent component to child components.
 - To pass in a **boolean**/array/object/... value as prop, use the v-bind syntax `:is-primary="false"`. If it is a string, then don't need to use `v-bind`.
+  - Vue interprets prop values as strings.
+  - Use `v-bind` to pass dynamic values (arrays, objects, Booleans, or **data** properties).
 
 ```js
 // ParentComponent
@@ -122,7 +124,7 @@ export default {
 
 ## `computed` property
 
-- Used to define properties in a component that are calculated based on other data properties.
+- Used to define properties in a component that are **calculated based on other data properties**.
 - Create reactive properties that automatically update whenever their dependent properties change.
 - In this example, we are using a reusable button component where you can customize the looks of the button by passing in props into the Button component.
 
@@ -149,3 +151,32 @@ export default {
 }
 </script>
 ```
+
+## CSS Class
+
+- Can combine `v-bind` with the `class` attribute to provide dynamic styles to a HTML element.
+- Vue expects a JavaScript object where the properties are class names and the values are Booleans.
+  - `true` means "apply this CSS class" and `false` means "do not apply this class".
+
+```js
+<template>
+  <button :class="buttonClass">
+    {{ text }}
+  </button>
+</template>
+
+...
+
+computed: {
+  buttonClass() {
+    return {
+      [this.type]: true // { primary: true } or { secondary: true }
+    }
+  }
+}
+```
+
+## Prop Validation
+
+- Can add validation to our prop such as the data type, optional/required, and a default value. Vue will inform us of violations in the browser console. Tests will sometimes catch violations too.
+- Add the `validator` method to a prop validation object to validate custom business logic.
