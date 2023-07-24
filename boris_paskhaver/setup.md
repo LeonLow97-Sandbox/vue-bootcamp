@@ -130,3 +130,23 @@ module.exports = {
 
 - Go to Google and search for `Testing playground chrome extension` and add this extension.
 - Open DevTools and it will be there.
+
+## fontawesome icons
+
+- `npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome@latest-3`
+- Include fontawesome as a global variable in `main.js`
+
+```js
+import { createApp } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+import '@/index.css'
+import App from '@/App.vue'
+
+// add fontawesome icons for our project
+library.add(faSearch)
+
+createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
+```
