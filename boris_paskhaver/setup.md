@@ -2,6 +2,7 @@
 
 - `npm init vue@3`
 - `cd` into project folder
+- `npm install`
 - `npm run dev`
 
 ## Adding Vue DevTools
@@ -55,6 +56,7 @@ module.exports = {
 
 - `npm install --save-dev @testing-library/vue @testing-library/jest-dom @testing-library/user-event`
 - Create a `setup.js` in the root directory of your project
+  - Add this `setup.js` file into a `tests` folder.
 
 ```js
 import { cleanup } from '@testing-library/vue';
