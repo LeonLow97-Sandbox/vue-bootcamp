@@ -486,6 +486,48 @@ render(TheSubnav, {
 });
 ```
 
+## Vitest: Mock Function
+
+- The purpose is to check if the mock function has been called with the correct arguments.
+
+```js
+describe('Vitest playground', () => {
+  it('tracks whether it has been called', () => {
+    const mockFunction = vi.fn();
+    mockFunction(1, 2);
+    expect(mockFunction).toHaveBeenCalledWith(1, 2);
+  });
+});
+```
+
+## Testing `time-related` operations
+
+```js
+it('displays introductory action verb', () => {
+  vi.useFakeTimers(); // use fake timers to control time-related operations
+  render(TheHeadline);
+
+  const actionPhrase = screen.getByRole('heading', {
+    name: /build for everyone/i,
+  });
+  expect(actionPhrase).toBeInTheDocument();
+
+  vi.useRealTimers(); // clean up function for timers (reset to JavaScript timer)
+});
+
+it('changes action verb at a consistent interval', () => {
+  vi.useFakeTimers();
+  const mock = vi.fn(); // creating a mock function
+  vi.stubGlobal('setInterval', mock); // replacing global name with whatever we want
+
+  render(TheHeadline);
+
+  expect(mock).toHaveBeenCalled();
+
+  vi.useRealTimers();
+});
+```
+
 # <div id="user_stories">User Stories<a href="#content">⬆️</a></div>
 
 - As a user, I would like to navigate between the pages of the career site.
