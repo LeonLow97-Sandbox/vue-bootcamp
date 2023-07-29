@@ -216,6 +216,27 @@ computed: {
 - Vue components have **lifecycle hooks** that run at different moment's of the component's existence.
 - We used the `created` hook to setup an interval to change the text being rendered in our `TheHeadline` component. We also hooked into the `beforeUnmount` hook to remove the interval.
 
+## 2-Way Data Binding in Forms
+
+- From data to UI and UI to data.
+
+```js
+// Method 1:
+<input :value="role" @input="updateRole" />
+
+methods: {
+  updateRole(event) {
+    this.role = event.target.value
+  }
+}
+
+// Method 2:
+<input :value="location" @input="location = $event.target.value" />
+
+// Method 3: Using `v-model`
+<input v-model="role" />
+```
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
@@ -552,3 +573,4 @@ it('changes action verb at a consistent interval', () => {
 - As a user, I would like to have my primary and secondary actions suggested to me so that I know what steps I can take on the website.
 - As a user, I would like to know the number of jobs that matched my search results so that I can be sure my filters are being applied.
 - As a user, I would like to know what I can do at the company so that I get excited about working for the company.
+- As a user, I would like to provide the role that I am interested in and the city I would like to work in so that I can find job listings that are relevant to me.
