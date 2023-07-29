@@ -1,0 +1,35 @@
+<template>
+  <section>
+    <h1>{{ action }} for everyone</h1>
+    <h2>Find your next job at Leon Careers</h2>
+  </section>
+</template>
+
+<script>
+export default {
+  name: 'TheHeadline',
+  data() {
+    return {
+      action: 'Build',
+      interval: null
+    }
+  },
+  created() {
+    this.changeTitle()
+  },
+  beforeUnmount() {
+    clearInterval(this.interval)
+  },
+  methods: {
+    changeTitle() {
+      this.interval = setInterval(() => {
+        const actions = ['Build', 'Create', 'Design', 'Code']
+        const currentActionIndex = actions.indexOf(this.action) // 0, 1, 2, 3
+        const nextActionIndex = (currentActionIndex + 1) % 4 // 1, 2, 3, 1
+        const nextAction = actions[nextActionIndex]
+        this.action = nextAction
+      }, 3000)
+    }
+  }
+}
+</script>
