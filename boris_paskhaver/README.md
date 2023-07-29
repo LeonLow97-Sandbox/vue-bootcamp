@@ -43,13 +43,13 @@
 ```js
   <MainNav />
   <MainNav></MainNav>
-  <main-nav />
+  <main-nav /> // kebab-case
   <main-nav></main-nav>
 ```
 
 ## `name` property
 
-- Defines the component's name.
+- Defines the component's name. Need at least 2 words, cannot be like 'Main'
 
 ```html
 <script>
@@ -105,8 +105,7 @@ data() {
 
 - Passing data from parent component to child components.
 - To pass in a **boolean**/array/object/... value as prop, use the v-bind syntax `:is-primary="false"`. If it is a string, then don't need to use `v-bind`.
-  - Vue interprets prop values as strings.
-  - Use `v-bind` to pass dynamic values (arrays, objects, Booleans, or **data** properties).
+  - Vue interprets prop values as _strings_, thus use `v-bind` to pass dynamic values (arrays, objects, Booleans, or **data** properties).
 
 ```js
 // ParentComponent
@@ -164,6 +163,7 @@ export default {
 - Can combine `v-bind` with the `class` attribute to provide dynamic styles to a HTML element.
 - Vue expects a JavaScript object where the properties are class names and the values are Booleans.
   - `true` means "apply this CSS class" and `false` means "do not apply this class".
+- For example the CSS class is `primary`, it should be represented as `:class="{ primary: true }"` in the component.
 
 ```js
 <template>
@@ -209,11 +209,16 @@ computed: {
 
 ---
 
+## Component Lifecycle Hooks
+
+- [Lifecycle Hooks](https://vuejs.org/guide/essentials/lifecycle.html)
+- `beforeCreate()`, `created()`, `beforeMount()`, `mounted()`
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
 
-- Binding a HTML attribute to a piece of data in the component.
+- Binding a HTML _attribute_ to a piece of data in the component.
 - Use `:attr` as a shortcut to `v-bind:attr`.
 
 ```js
@@ -269,6 +274,7 @@ class="first:ml-0 ml-9 h-full"
 
 ## `v-else` Directive
 
+- `v-if` must be present for this to work.
 - Renders a chunk of HTML if the `v-if` directive evaluates to false.
 
 ```js
@@ -382,13 +388,12 @@ expect(companyName).toBeInTheDocument(); // querying that the company name is in
 render(MainNav, {
   data() {
     return {
-      company: 'Super Corp',
+      company: 'Leon Careers',
     };
   },
 });
 ```
 
-- NOT RECOMMENDED
 - Optional to customize certain aspects of the component (e.g.,companyName value) in the second argument of the `render` function.
 
 ## `screen`
@@ -396,13 +401,13 @@ render(MainNav, {
 - `screen` object to query/search the DOM for elements in various ways (by role, by text, by label, etc).
 - The second argument to a `screen` method is an object where we can customize the search criteria. Usually use `name`
 
-|   Methods   | Description                                                                                                  |
-| :---------: | ------------------------------------------------------------------------------------------------------------ |
-|   `getBy`   | Searches for 1 HTML element with the given criteria. Vue Testing Library recommends `getByRole` if possible. Raises an error if not found. |
-| `getByText` | Search by text.                                                                                              |
-| `getAllBy`  | Returns an array of all matching elements based on some criteria.                                            |
-|`queryBy`|Return `null` if an element cannot be found. |
-|`toHaveClass`|Verifies that a DOM node has a specific CSS class attached to it.|
+|    Methods    | Description                                                                                                                                |
+| :-----------: | ------------------------------------------------------------------------------------------------------------------------------------------ |
+|    `getBy`    | Searches for 1 HTML element with the given criteria. Vue Testing Library recommends `getByRole` if possible. Raises an error if not found. |
+|  `getByText`  | Search by text.                                                                                                                            |
+|  `getAllBy`   | Returns an array of all matching elements based on some criteria.                                                                          |
+|   `queryBy`   | Return `null` if an element cannot be found.                                                                                               |
+| `toHaveClass` | Verifies that a DOM node has a specific CSS class attached to it.                                                                          |
 
 ## Unit Testing of ARIA Roles
 
@@ -416,57 +421,57 @@ it('displays menu items for navigation', () => {
 ## `userEvent` object
 
 - The `userEvent` object from `@testing-library/user-event` simulates user events on the virtual DOM used by Vue Testing Library. Its methods represent the events.
-- The event methods are *asynchronous*. They return a Promise. Use `async/await` syntax for the `it` function.
+- The event methods are _asynchronous_. They return a Promise. Use `async/await` syntax for the `it` function.
 
 ```js
 it('displays user profile picture', async () => {
-  render(MainNav)
+  render(MainNav);
 
   let profileImage = screen.queryByRole('img', {
-    name: /user profile image/i
-  })
-  expect(profileImage).not.toBeInTheDocument()
+    name: /user profile image/i,
+  });
+  expect(profileImage).not.toBeInTheDocument();
 
   const loginButton = screen.getByRole('button', {
-    name: /sign in/i
-  })
-  await userEvent.click(loginButton) // simulating login button click with await
+    name: /sign in/i,
+  });
+  await userEvent.click(loginButton); // simulating login button click with await
 
   profileImage = screen.getByRole('img', {
-    name: /user profile image/i
-  })
-  expect(profileImage).toBeInTheDocument()
-})
+    name: /user profile image/i,
+  });
+  expect(profileImage).toBeInTheDocument();
+});
 ```
 
 ## Unit Testing on CSS classes
 
 ```js
-  it('applies one of several styles to button', () => {
-    render(ActionButton, {
-      props: {
-        text: 'Click Me',
-        type: 'primary'
-      }
-    })
+it('applies one of several styles to button', () => {
+  render(ActionButton, {
+    props: {
+      text: 'Click Me',
+      type: 'primary',
+    },
+  });
 
-    const button = screen.getByRole('button', {
-      name: /Click Me/i
-    })
-    expect(button).toHaveClass('primary') // testing CSS class name
-  })
+  const button = screen.getByRole('button', {
+    name: /Click Me/i,
+  });
+  expect(button).toHaveClass('primary'); // testing CSS class name
+});
 ```
 
 ## [Vue Warn]: Failed to resolve component
 
-- Vue throws this error because it does not know what font-awesome-icon package is. 
+- Vue throws this error because it does not know what font-awesome-icon package is.
 - Have to use **stubs** to act as a replacement which is something lightweight by Vue Testing Library.
 
 ```
 [Vue warn]: Failed to resolve component: font-awesome-icon
-If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement. 
-  at <TheSubnav key=0 > 
-  at <MainNav ref="VTU_COMPONENT" > 
+If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement.
+  at <TheSubnav key=0 >
+  at <MainNav ref="VTU_COMPONENT" >
   at <VTUROOT>
 ```
 
@@ -475,10 +480,10 @@ If this is a native custom element, make sure to exclude it from component resol
 render(TheSubnav, {
   global: {
     stubs: {
-      FontAwesomeIcon: true
-    }
+      FontAwesomeIcon: true,
+    },
   },
-})
+});
 ```
 
 # <div id="user_stories">User Stories<a href="#content">⬆️</a></div>
