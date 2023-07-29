@@ -328,6 +328,11 @@ export default {
 </script>
 ```
 
+## `v-model` Directive
+
+- The `v-model` directive creates 2-way data binding between a user input and a `data` property.
+- Can manually configure this functionality by `v-binding` to the `value` attribute and reacting to the `input` event with `v-on:input` (aka `@input`).
+
 # <div id="unit_testing">Unit Testing (Vitest) <a href="#content">⬆️</a></div>
 
 - **Testing** means writing code that validates that our implementation code works as expected.
