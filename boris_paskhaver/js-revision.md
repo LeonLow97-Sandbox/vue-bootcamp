@@ -34,6 +34,6 @@ const interval = setInterval(() => {
 }, 2000)
 
 setTimeout(() => {
-    clearInterval(interval) // stops the execution of the interval
+    clearInterval(interval) // clears an interval, stops the execution of the interval
 }, 10000)
 ```

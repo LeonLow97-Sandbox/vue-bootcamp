@@ -213,6 +213,8 @@ computed: {
 
 - [Lifecycle Hooks](https://vuejs.org/guide/essentials/lifecycle.html)
 - `beforeCreate()`, `created()`, `beforeMount()`, `mounted()`
+- Vue components have **lifecycle hooks** that run at different moment's of the component's existence.
+- We used the `created` hook to setup an interval to change the text being rendered in our `TheHeadline` component. We also hooked into the `beforeUnmount` hook to remove the interval.
 
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
@@ -488,7 +490,8 @@ render(TheSubnav, {
 
 ## Vitest: Mock Function
 
-- The purpose is to check if the mock function has been called with the correct arguments.
+- To move logic out of the component so that we can test the logic and the component in isolation.
+- The Vitest mock function `vi.fn()` "mocks out" a real function. We use it as a stand-in or a replacement for a real function that we do not want to involve in our tests.
 
 ```js
 describe('Vitest playground', () => {
@@ -499,6 +502,20 @@ describe('Vitest playground', () => {
   });
 });
 ```
+
+## `vi` Vitest Methods
+
+- `vi.useFakeTimers` method auto-mocks JavaScript's timer functions (`setTimeout`, `setInterval`, etc).
+- `vi.useRealTimers` method returns the mocked functions to their original, native JavaScript implementations.
+- `vi.advanceTimersToNextTimer` method simulates the passage of an interval
+  - Can also use `vi.advanceTimersByTime(3000)` with the passed milliseconds
+- `vi.stubGlobal` method mocks out a global function with a specified mock. We can retain access to the mock as a constant.
+- `nextTick` method waits for the component's DOM updates to be applied. It is an asynchronous function so need to use `async` and `await`. We use it to "wait" in our tests.
+
+# `beforeEach` and `afterEach`
+
+- `beforeEach` function executes a function before each test run. We can use it to run shared setup code for tests.
+- `afterEach` function executes a function after each test run. We can use it to run shared cleanup code for tests.
 
 ## Testing `time-related` operations
 

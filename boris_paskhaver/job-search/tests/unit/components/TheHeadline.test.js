@@ -35,7 +35,7 @@ describe('TheHeadline', () => {
 
   it('swaps action verb after interval', async () => {
     render(TheHeadline)
-    vi.advanceTimersToNextTimer() // move setInterval to the next interval
+    vi.advanceTimersToNextTimer() // simulates 1 interval, move setInterval to the next interval
 
     await nextTick() // asynchronous function (moment when Vue updates DOM)
 
