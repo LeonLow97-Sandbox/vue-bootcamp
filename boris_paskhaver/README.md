@@ -240,7 +240,21 @@ methods: {
 ## Communication from Child to Parent Component (`TextInput.vue`)
 
 ---
+
 #### `$emit` method
+
+- Vue components have access to an `$emit` method via the `this` keyword.
+- The `$emit` method sends a message/event to the parent component.
+- The first argument to `$emit` is the event name. The follow-up arguments represent the data that we would like to pass up.
+- In the parent component, we can react to a child component's emitted event using the `v-on` directive (or `@` shortcut).
+- To invoke a component method for each emitted event, declare the method in the `methods` object and provide its name. `@handleInput="someMethod"`
+- Can also react to a emitted event inline. To access the data/payload from the child, use the `$event` keyword.
+- Can use the `v-model` directive on a Vue component if we provide a `modelValue` prop and emit an `update:modelValue` event.
+- To declare the limited events that a component can emit, provide an `emits` property to the configuration object.
+- Set the `emits` key equal to an array of strings representing the event names.
+- In the unit test suit, the `emitted` method returns an object that keeps track of a component's emitted events.
+- The properties will be the event names. The values will be arrays of arrays. Each nested array stores the data/arguments that the event included.
+
 ---
 
 - From Child component, use `this.$emit("handleInput", this.value)` to emit an event from the child to parent component.
@@ -279,6 +293,20 @@ updateRole(payload) {
 
 // Method 2 (Less code):
 <text-input :value="role" @handle-input="role = $event" />
+
+// Method 3 (v-model):
+// Child Component
+emits: ["update:modelValue"],
+methods: {
+  handleInput($event) {
+    // passing value from Child component to Parent component
+    // the payload in this event is `this.value`
+    this.$emit('update:modelValue', $event.target.value)
+  }
+}
+
+// Parent Component
+<text-input v-model="role" placeholder="Software engineer" />
 ```
 
 - How the logic works? Referring to Method 2
