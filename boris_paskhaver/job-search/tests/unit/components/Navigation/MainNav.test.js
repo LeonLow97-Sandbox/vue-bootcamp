@@ -6,8 +6,15 @@ import MainNav from '@/components/Navigation/MainNav.vue'
 
 describe('MainNav', () => {
   const renderMainNav = () => {
+    const $route = {
+      name: 'Home'
+    }
+
     render(MainNav, {
       global: {
+        mocks: {
+          $route
+        },
         stubs: {
           FontAwesomeIcon: true,
           RouterLink: RouterLinkStub // to stub router link in Vue Router

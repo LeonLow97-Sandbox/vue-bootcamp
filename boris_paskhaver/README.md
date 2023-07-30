@@ -726,3 +726,4 @@ it('changes action verb at a consistent interval', () => {
 - As a user, I would like to know what I can do at the company so that I get excited about working for the company.
 - As a user, I would like to provide the role that I am interested in and the city I would like to work in so that I can find job listings that are relevant to me.
 - As a user, I would like to navigate to a different page to see my job results so that I am not overwhelmed by the home page's content.
+- As a user, I would like to navigate to the job results page while keeping track of the role and location that I am interested in so that I can see job listings tailored to my interests.
