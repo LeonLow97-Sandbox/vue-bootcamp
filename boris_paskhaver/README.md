@@ -377,6 +377,40 @@ render(MainNav, {
 });
 ```
 
+## Wildcard Routes
+
+- Can create a Vue Router route with a dynamic segment (wildcard). We provide the segment with a name, which Vue will make available in the `params` object in the `$route` object.
+  - `/jobs/results/:id`
+- Vue Router will match the wildcard with _any string_.
+
+## Query Params
+
+- `Query params` attach additional information to the end of a URL through the user of key-value pairs.
+  - `?key=value&a=b`
+- A form emits a `submit` event when the user submits it. We can attach the `prevent` modifier to prevent a page refresh.
+  - `@submit.prevent="someMethod"` (similar to `event.preventDefault()` in React)
+
+## Mocking Dependencies (`JobSearchForm.test.js`)
+
+- Can use the `mocks` property in our test configuration object to mock out/replace global properties with our custom objects.
+- We replaced the `$router` and `$route` properties with simpler JavaScript objects. This decouples the tests from the real Vue Router implementation.
+
+```js
+const push = vi.fn();
+const $router = { push };
+
+render(JobSearchForm, {
+  global: {
+    mocks: {
+      $router,
+    },
+    stubs: {
+      FontAwesomeIcon: true,
+    },
+  },
+});
+```
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
