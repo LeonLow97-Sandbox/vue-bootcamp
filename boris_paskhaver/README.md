@@ -314,7 +314,68 @@ methods: {
   2. In the parent component, it assigns the emitted event from the child component to the data property `role`.
   3. The data property `role` is then assigned to the prop value and this prop value is passed down to the Child component that saves in the `value` of `<input>`.
 
+## Vue Router
 
+- Vue Router allows us to navigate the user to different "pages" of the app at different routes/paths.
+- Vue tears down and replaces components at a given route. The page never refreshes. A Vue app is a single-page application.
+- We provide a Vue Router with an array of routes. (In `/router/index.js`)
+- Each route specifies a path, a name, and a component.
+
+```js
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: HomeView,
+  },
+];
+```
+
+- We typically store our "page" components in the `views` directory to differentiate them from smaller components.
+
+## `<router-view />` and `<router-link />`
+
+- The `<router-view />` component watches the path and renders the correct dynamic component as the path changes. (Found in `App.vue`)
+- Can mix constant content with dynamic content form `<router-view />`.
+- The `<router-link />` component simulates a `<a>` hyperlink. The user clicks it to navigate.
+
+```js
+// 3 ways to navigate
+<router-link :to="{ name: 'Home' }">Leon Careers</router-link>
+<router-link :to="{ path: '/' }">Leon Careers</router-link>
+<router-link to="/">Leon Careers</router-link>
+```
+
+## `$route` and `$router`
+
+- Every component gains access to a `this.$route` property to access information about the route.
+- Every component gains access to the Vue Router via the `this.$router` property. We can use the router to force navigation to a new path (for example, when the user clicks a button).
+
+```js
+goToHome() {
+  // 3 Methods (USE ONLY 1)
+  this.$router.push('/')
+  this.$router.push({ name: 'Home' })
+  this.$router.push({ path: '/' })
+}
+```
+
+## Stubbing Vue Router components (Unit Testing)
+
+- `<router-link />` and `<router-view />` are registered as global components. Our tests do not understand where they are coming from.
+- Could stub out a `<router-link />` with the generic stub but the `RouterLinkStub` component is a more specialized stub that can more effectively play the role of a `<router-link />`
+
+```js
+// MainNav.test.js
+render(MainNav, {
+  global: {
+    stubs: {
+      FontAwesomeIcon: true,
+      RouterLink: RouterLinkStub, // to stub router link in Vue Router
+    },
+  },
+});
+```
 
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
