@@ -237,6 +237,55 @@ methods: {
 <input v-model="role" />
 ```
 
+## Communication from Child to Parent Component (`TextInput.vue`)
+
+---
+#### `$emit` method
+---
+
+- From Child component, use `this.$emit("handleInput", this.value)` to emit an event from the child to parent component.
+- In Parent component, use `<text-input @handle-input="updateLocation" />` to receive the event/payload.
+
+```js
+// Child Component
+<input
+  type="text"
+  :value="value"
+  class="w-full text-lg font-normal focus:outline-none"
+  @input="handleInput"
+/>
+
+props: {
+  value: {
+    type: String,
+    required: true
+  }
+},
+methods: {
+  handleInput($event) {
+    // passing value from Child component to Parent component
+    // the payload in this event is `this.value`
+    this.$emit('handleInput', $event.target.value)
+  }
+}
+
+// Receiving Payload in Parent Component
+// Method 1:
+<text-input @handle-input="updateRole" />
+
+updateRole(payload) {
+  this.location = payload
+}
+
+// Method 2 (Less code):
+<text-input :value="role" @handle-input="role = $event" />
+```
+
+- How the logic works? Referring to Method 2
+  1. As the user types, the `handleInput` method is triggered in the Child component `TextInput.vue` which emits an event to the parent component.
+  2. In the parent component, it assigns the emitted event from the child component to the data property `role`.
+  3. The data property `role` is then assigned to the prop value and this prop value is passed down to the Child component that saves in the `value` of `<input>`.
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
@@ -436,6 +485,12 @@ render(MainNav, {
 |  `getAllBy`   | Returns an array of all matching elements based on some criteria.                                                                          |
 |   `queryBy`   | Return `null` if an element cannot be found.                                                                                               |
 | `toHaveClass` | Verifies that a DOM node has a specific CSS class attached to it.                                                                          |
+
+## `expect`
+
+|  Methods  | Description |
+| :-------: | ----------- |
+| `toEqual` |             |
 
 ## Unit Testing of ARIA Roles
 
