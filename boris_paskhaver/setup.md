@@ -160,3 +160,7 @@ createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
   <font-awesome-icon :icon="['fas', 'search']" class="mr-3" />
 </div>
 ```
+
+## Installing Vue Router
+
+- `npm install --save vue-router@4`

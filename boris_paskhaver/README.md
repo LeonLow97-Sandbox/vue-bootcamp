@@ -314,6 +314,8 @@ methods: {
   2. In the parent component, it assigns the emitted event from the child component to the data property `role`.
   3. The data property `role` is then assigned to the prop value and this prop value is passed down to the Child component that saves in the `value` of `<input>`.
 
+
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
@@ -662,3 +664,4 @@ it('changes action verb at a consistent interval', () => {
 - As a user, I would like to know the number of jobs that matched my search results so that I can be sure my filters are being applied.
 - As a user, I would like to know what I can do at the company so that I get excited about working for the company.
 - As a user, I would like to provide the role that I am interested in and the city I would like to work in so that I can find job listings that are relevant to me.
+- As a user, I would like to navigate to a different page to see my job results so that I am not overwhelmed by the home page's content.
