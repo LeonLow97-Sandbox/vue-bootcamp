@@ -164,3 +164,15 @@ createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
 ## Installing Vue Router
 
 - `npm install --save vue-router@4`
+
+## JSON Server for Backend
+
+- `npm install --save-dev json-server`
+- Add to `package.json` with the following file `db.json` in root directory of project
+  - `"backend": "json-server --watch db.json",`
+  - `npm run backend` (will run on port 3000)
+  - Go to `localhost:3000/jobs` to see the JSON. Add JSONView Chrome Extension.
+
+## Installing Axios
+
+- `npm install --save axios`

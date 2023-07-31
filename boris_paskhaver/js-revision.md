@@ -2,7 +2,7 @@
 
 ## JavaScript Dynamic Object Keys
 
-- Add *square brackets* to the object key.
+- Add _square brackets_ to the object key.
 
 ```js
 const favouriteFood = "sushi"
@@ -20,20 +20,43 @@ console.log(goodFoods) // { sushi: true }
 // Arguments: function, number of milliseconds to wait before running the function.
 // It will only run once
 setTimeout(() => {
-  console.log('I will print 2 seconds after the program starts ONCE')
-}, 2000)
+  console.log('I will print 2 seconds after the program starts ONCE');
+}, 2000);
 
 // It will run every time at a consistent interval (runs "forever")
 // Unable to stop this execution
 setInterval(() => {
-  console.log('Runs every 2 seconds in setInterval...')
-}, 2000)
+  console.log('Runs every 2 seconds in setInterval...');
+}, 2000);
 
 const interval = setInterval(() => {
-  console.log('Runs every 2 seconds...')
-}, 2000)
+  console.log('Runs every 2 seconds...');
+}, 2000);
 
 setTimeout(() => {
-    clearInterval(interval) // clears an interval, stops the execution of the interval
-}, 10000)
+  clearInterval(interval); // clears an interval, stops the execution of the interval
+}, 10000);
+```
+
+## Making Axios Request
+
+```js
+// METHOD 1
+const axios = require('axios');
+
+const fetchJobsV1 = () => {
+  axios.get('http://localhost:3000/jobs').then((response) => {
+    console.log(response.data);
+  });
+};
+
+fetchJobsV1();
+
+// METHOD 2 (async-await syntax)
+const fetchJobsV2 = async () => {
+  const response = await axios.get('http://localhost:3000/jobs');
+  console.log(response.data);
+};
+
+fetchJobsV2();
 ```
