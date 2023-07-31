@@ -411,6 +411,11 @@ render(JobSearchForm, {
 });
 ```
 
+## `axios`
+
+- The `axios` library makes HTTP requests. We use the `axios.get` method to make a GET request to an endpoint for data.
+- Within a component, a common place to fetch data is the `mounted` lifecycle hook. The async request may take some time to resolve, and we don't want to delay component render.
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
@@ -750,6 +755,59 @@ it('changes action verb at a consistent interval', () => {
   vi.useRealTimers();
 });
 ```
+
+## Factory Functions (`JobListing.test.js`)
+
+- The response can overwrite a `data` property, which forces Vue to re-render the template with the latest data.
+- We can use factory functions to generate complex objects for our tests. We can design them in such a way that our tests can specify the unique properties they care about.
+
+```js
+const createJobProps = (jobProps = {}) => ({
+  title: 'Vue Developer',
+  organization: 'AirBnB',
+  locations: ['Singapore'],
+  minimumQualifications: ['Code'],
+  ...jobProps
+})
+
+const renderJobListing = (jobProps) => {
+  render(JobListing, {
+    global: {
+      stubs: {
+        'router-link': RouterLinkStub
+      }
+    },
+    props: {
+      job: {
+        ...jobProps
+      }
+    }
+  })
+}
+
+// In Test
+const job = createJob({ title: 'Software Engineer', organization: 'Google' });
+```
+
+## Mocking out Libraries - Axios (`JobListings.test.js`)
+
+- We don't want our component unit tests to make an actual API request. It's slow, prone to error, and complex.
+- Rather, we can instruct Vitest to mock out a dependency (like Axios). Vitest will replace all of an object's methods with mock functions.
+
+```js
+import axios from 'axios'
+vi.mock('axios')
+
+axios.get.mockResolvedValue({ data: [] })
+```
+
+- We can customize how our mock functions operate, such as setting their return values or resolved values. By default, Vitest functions return `undefined`.
+- `Key Takeaway`: Create the simplest, most lightweight object that will allow us to test the component in isolation.
+
+## Vue Testing Library Async Query Methods (`getByRole` vs `findByRole`)
+
+- The `find` family of methods from Vue Testing Library return a Promise. This is helpful when we need to wait for a component to rerender due to some asynchronous operation completing.
+- The method names will be similar (`getByRole` for **synchronous** versus `findByRole` for **asynchronous**).
 
 # <div id="user_stories">User Stories<a href="#content">⬆️</a></div>
 
