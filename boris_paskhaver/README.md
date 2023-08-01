@@ -416,6 +416,22 @@ render(JobSearchForm, {
 - The `axios` library makes HTTP requests. We use the `axios.get` method to make a GET request to an endpoint for data.
 - Within a component, a common place to fetch data is the `mounted` lifecycle hook. The async request may take some time to resolve, and we don't want to delay component render.
 
+## `slice` Method in JavaScript (Used in Dynamic Pagination)
+
+- The `slice` method returns a copy of an array. We can use it to extract a subset of the original array's elements.
+- Create a `computed` property of any _derived_ data, such as our subset of 10 jobs from the original 100.
+
+## Environment Variables
+
+- Environment variables are key-value pairs. Vite loads a file of environment variable based on the environment the app is running in [`development`, `production`, or `test`].
+- Use environment variables to store settings/config for different environments.
+- File names:
+  - **development**: `.env.development.local`
+  - **production**: `.env.production.local`
+  - **test**: `.env.test.local`
+  - **applicable for all environments**: `.env`
+- The `.local` added to the environment variable file signifies that the environment variable is applied **locally only** and will **not be included in version control systems**. (will be ignored by git).
+
 # <div id="directives">Directives <a href="#content">⬆️</a></div>
 
 ## `v-bind` Directive
@@ -767,23 +783,23 @@ const createJobProps = (jobProps = {}) => ({
   organization: 'AirBnB',
   locations: ['Singapore'],
   minimumQualifications: ['Code'],
-  ...jobProps
-})
+  ...jobProps,
+});
 
 const renderJobListing = (jobProps) => {
   render(JobListing, {
     global: {
       stubs: {
-        'router-link': RouterLinkStub
-      }
+        'router-link': RouterLinkStub,
+      },
     },
     props: {
       job: {
-        ...jobProps
-      }
-    }
-  })
-}
+        ...jobProps,
+      },
+    },
+  });
+};
 
 // In Test
 const job = createJob({ title: 'Software Engineer', organization: 'Google' });
@@ -795,10 +811,10 @@ const job = createJob({ title: 'Software Engineer', organization: 'Google' });
 - Rather, we can instruct Vitest to mock out a dependency (like Axios). Vitest will replace all of an object's methods with mock functions.
 
 ```js
-import axios from 'axios'
-vi.mock('axios')
+import axios from 'axios';
+vi.mock('axios');
 
-axios.get.mockResolvedValue({ data: [] })
+axios.get.mockResolvedValue({ data: [] });
 ```
 
 - We can customize how our mock functions operate, such as setting their return values or resolved values. By default, Vitest functions return `undefined`.
@@ -808,6 +824,46 @@ axios.get.mockResolvedValue({ data: [] })
 
 - The `find` family of methods from Vue Testing Library return a Promise. This is helpful when we need to wait for a component to rerender due to some asynchronous operation completing.
 - The method names will be similar (`getByRole` for **synchronous** versus `findByRole` for **asynchronous**).
+
+## Mocking out Objects (`JobListings.test.js`)
+
+- Keep tests simple. Mock out complex objects like `$route` or API responses with simple JavaScript objects that can play the same role. This also decouples the component from its dependencies for testing.
+
+## Debugging
+
+- Can use `it.only` to ask Vitest to run _one_ test in a test suite.
+- Use `screen.debug()` to output the current HTML for the rendered component.
+
+## Add ARIA Roles for `<a>` link tags with no `href`
+
+- For `<router-link>`, there is no `href` attribute so `queryByRole('link')` might return null because it does not recognize it as a link tag.
+- Add `role="link"` to the `<router-link>` tag to resolve this issue.
+
+```js
+<router-link
+  v-if="previousPage"
+  role="link"
+  :to="{ name: 'JobResults', query: { page: previousPage } }"
+  class="mx-3 text-sm font-semibold text-brand-blue-1"
+  >Previous</router-link
+>
+```
+
+```js
+// Unit Test
+it('shows link to previous page', async () => {
+  axios.get.mockResolvedValue({ data: Array(15).fill({}) });
+  const queryParams = { page: '2' };
+  const $route = createRoute(queryParams);
+
+  renderJobListings($route);
+
+  await screen.findAllByRole('listitem');
+
+  const previousLink = screen.queryByRole('link', { name: /previous/i });
+  expect(previousLink).toBeInTheDocument();
+});
+```
 
 # <div id="user_stories">User Stories<a href="#content">⬆️</a></div>
 
