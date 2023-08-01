@@ -67,7 +67,15 @@ export default {
   },
   // Better to make a GET Request after the component has been rendered
   async mounted() {
-    const response = await axios.get('http://localhost:3000/jobs')
+    /*
+    ENVIRONMENT VARIABLES IN VITE
+      -- development --> hot module reloading
+      -- production --> reduce file size
+      -- test 
+    */
+
+    const baseUrl = import.meta.env.VITE_APP_API_URL
+    const response = await axios.get(`${baseUrl}/jobs`) // adding env variable here
     this.jobs = response.data
   }
 }
