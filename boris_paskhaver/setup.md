@@ -176,3 +176,7 @@ createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
 ## Installing Axios
 
 - `npm install --save axios`
+
+## Installing Pinia
+
+- `npm install --save pinia`
