@@ -15,3 +15,11 @@
 - Pinia exists independently of the components, so it can also be **unit tested by itself**. It doesn't have to know which components it is connected to or how many components it is connected to.
 - Similar to Redux in React.
 
+## Importing Pinia
+
+```js
+// main.js
+import { createPinia } from 'pinia'
+createApp(App).use(pinia)
+```
+
