@@ -180,3 +180,7 @@ createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
 ## Installing Pinia
 
 - `npm install --save pinia`
+
+## Installing Pinia Testing Library
+
+- `npm install --save-dev @pinia/testing`
