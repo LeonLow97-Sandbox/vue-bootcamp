@@ -105,6 +105,26 @@ methods: {
 }
 ```
 
+## Pinia Actions (API Calls)
+
+- Actions can perform asynchronous operations like making API requests. They then update Pinia state with their responses.
+
+```js
+export const useJobsStore = defineStore('jobs', {
+  state: () => ({
+    jobs: []
+  }),
+  actions: {
+    async [FETCH_JOBS]() {
+      const jobs = await getJobs()
+      this.jobs = jobs
+    }
+  }
+})
+```
+
+- Moving logic out of components into Pinia actions separates concerns. It also allows other components to have access to Pinia state + actions.
+
 # Unit Testing Pinia
 
 #### Unit Testing Pinia store
@@ -144,6 +164,7 @@ describe('actions', () => {
 #### Unit Testing components that utilize Pinia store
 
 - `const pinia = createTestingPinia({stubActions: false});`
+  - Can use `createTestingPinia` in our **component tests** to have a global Pinia instance with writable state properties and actions replaced by mock functions.
   - If `stubActions` is false, the actual actions in the Pinia store will be executed when you call them in your test cases.
   - If `stubActions` is true (by default), the actions in the Pinia store will automatically be replaced with stubs (mock implementations) during testing.
 - We can unit test Pinia stores in isolation. Access properties directly from the store and invoke actions as methods on the store.
