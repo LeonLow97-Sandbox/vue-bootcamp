@@ -24,8 +24,8 @@
 
 ## Named Slots
 
-- Slots are default to have a name of `default`.
-- Named slots are defined using the `<slot>` element with a `name` attribute.
+- By giving each slot a `name`, we can have multiple slots within a single component (i.e., multiple places where the parent can provide custom HTML).
+- If we do not give a `<slot>` a name, Vue will assign it the name `default`. Can only use one `<slot>` without a name.
 
 ```js
 <template>
@@ -39,3 +39,9 @@
   </div>
 </template>
 ```
+
+## Multiple Slots in the Parent (`TeamsView.vue`)
+
+- Use the `v-slot` or `#`
+- The parent component uses the `<template v-slot:slotName>` syntax to target a specific slot by name.
+- Can also use the shortcut `<template #slotName>`. ESLint and the Vue Style Guide prefer this approach.
