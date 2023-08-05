@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faAngleUp, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import '@/index.css'
 import router from '@/router'
@@ -10,6 +10,8 @@ import App from '@/App.vue'
 
 // add fontawesome icons for our project
 library.add(faSearch)
+library.add(faAngleUp)
+library.add(faAngleDown)
 
 const pinia = createPinia()
 
