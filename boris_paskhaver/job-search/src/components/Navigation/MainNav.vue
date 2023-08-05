@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       menuItems: [
-        { text: 'Teams', url: '/' },
+        { text: 'Teams', url: '/teams' },
         { text: 'Locations', url: '/' },
         { text: 'Life at Leon Careers', url: '/' },
         { text: 'How we Hire', url: '/' },
