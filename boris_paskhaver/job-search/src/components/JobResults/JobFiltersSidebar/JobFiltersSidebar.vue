@@ -8,6 +8,8 @@
         </div>
       </div>
 
+      <collapsible-accordion header="Degree" />
+
       <collapsible-accordion header="Job Types">
         <p>Placeholder test</p>
       </collapsible-accordion>
