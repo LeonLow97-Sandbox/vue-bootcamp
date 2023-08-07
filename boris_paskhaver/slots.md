@@ -125,18 +125,18 @@ it('allows parent component to provide title content', () => {
 ```js
 // Child Component (SpotLight.test.js)
 it('provides description to parent component', async () => {
-  const spotlight = {description: "Another description"}
-  mockSpotlightsResponse(spotlight)
+  const spotlight = { description: 'Another description' };
+  mockSpotlightsResponse(spotlight);
 
   render(SpotLight, {
     slots: {
       default: `<template #default="slotProps">
               <h1>{{ slotProps.description }}</h1>
-          </template>`
-    }
-  })
+          </template>`,
+    },
+  });
 
-  const text = await screen.findByText('Another description')
-  expect(text).toBeInTheDocument()
-})
+  const text = await screen.findByText('Another description');
+  expect(text).toBeInTheDocument();
+});
 ```

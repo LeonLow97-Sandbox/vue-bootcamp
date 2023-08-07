@@ -112,18 +112,44 @@ methods: {
 ```js
 export const useJobsStore = defineStore('jobs', {
   state: () => ({
-    jobs: []
+    jobs: [],
   }),
   actions: {
     async [FETCH_JOBS]() {
-      const jobs = await getJobs()
-      this.jobs = jobs
-    }
-  }
-})
+      const jobs = await getJobs();
+      this.jobs = jobs;
+    },
+  },
+});
 ```
 
 - Moving logic out of components into Pinia actions separates concerns. It also allows other components to have access to Pinia state + actions.
+
+# Pinia Getters
+
+- In Pinia, Getters are functions that allow you to retrieve **computed** values from the store's state.
+- Getters are similar to computed properties in Vue components, they are used to derive values based on the current state of the store and can be considered as a form of read-only computed properties for the store.
+
+```js
+export const useJobsStore = defineStore('jobs', {
+  state: () => ({
+    jobs: [],
+  }),
+  actions: {
+    async [FETCH_JOBS]() {
+      const jobs = await getJobs();
+      this.jobs = jobs;
+    },
+  },
+  getters: {
+    [UNIQUE_ORGANIZATIONS](state) {
+      const uniqueOrganizations = new Set();
+      state.jobs.forEach((job) => uniqueOrganizations.add(job.organization));
+      return uniqueOrganizations;
+    },
+  },
+});
+```
 
 # Unit Testing Pinia
 
