@@ -52,6 +52,16 @@ describe('getters', () => {
     })
   })
 
+  describe('UNIQUE_JOB_TYPES', () => {
+    it('finds unique job types from list of jobs', () => {
+      const store = useJobsStore()
+      store.jobs = [{ jobType: 'Full-Time' }, { jobType: 'Full-Time' }, { jobType: 'Full-Time' }]
+
+      const result = store.UNIQUE_JOB_TYPES
+      expect(result).toEqual(new Set(['Full-Time', 'Full-Time']))
+    })
+  })
+
   describe('FILTERED_JOBS_BY_ORGANIZATIONS', () => {
     it('identifies jobs that are associated with the given organizations', () => {
       const jobsStore = useJobsStore()
@@ -86,6 +96,42 @@ describe('getters', () => {
           { organization: 'Google' },
           { organization: 'Amazon' },
           { organization: 'Microsoft' }
+        ])
+      })
+    })
+  })
+
+  describe('FILTERED_JOBS_BY_JOB_TYPES', () => {
+    it('identifies jobs that are associated with given job types', () => {
+      const jobStore = useJobsStore()
+      jobStore.jobs = [{ jobType: 'Full-Time' }, { jobType: 'Temporary' }, { jobType: 'Part-Time' }]
+
+      const userStore = useUserStore()
+      userStore.selectedJobTypes = ['Full-Time', 'Part-Time']
+
+      const result = jobStore.FILTERED_JOBS_BY_JOB_TYPES
+
+      expect(result).toEqual([{ jobType: 'Full-Time' }, { jobType: 'Part-Time' }])
+    })
+
+    describe('when the user has not selected any job types', () => {
+      it('returns all jobs', () => {
+        const jobStore = useJobsStore()
+        jobStore.jobs = [
+          { jobType: 'Full-Time' },
+          { jobType: 'Temporary' },
+          { jobType: 'Part-Time' }
+        ]
+
+        const userStore = useUserStore()
+        userStore.selectedJobTypes = []
+
+        const result = jobStore.FILTERED_JOBS_BY_JOB_TYPES
+
+        expect(result).toEqual([
+          { jobType: 'Full-Time' },
+          { jobType: 'Temporary' },
+          { jobType: 'Part-Time' }
         ])
       })
     })

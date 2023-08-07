@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { createTestingPinia } from '@pinia/testing'
 
-import JobsFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue'
+import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue'
 import { useJobsStore } from '@/stores/jobs'
 import { useUserStore } from '@/stores/user'
 
@@ -12,7 +12,7 @@ describe('JobFiltersSidebarOrganizations', () => {
     const userStore = useUserStore()
     const jobsStore = useJobsStore()
 
-    render(JobsFiltersSidebarOrganizations, {
+    render(JobFiltersSidebarOrganizations, {
       global: {
         plugins: [pinia],
         stubs: {

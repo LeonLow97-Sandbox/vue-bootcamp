@@ -878,3 +878,4 @@ it('shows link to previous page', async () => {
 - As a user, I would like to see all job listings on the job results page so that I can see which positions I can apply to at Leon Careers.
 - [`Dynamic Pagination`] As a user, I would like to navigate between multiple pages of job listings so that I am not overwhelmed by the content on my screen.
 - [`Pinia`] As a user, I would like to **filter** jobs by organizations so that I can discover opportunities in the companies that I am excited to work for.
+- [`Pinia`] As a user, I would like to filter jobs by job type (full time, part time, etc) so that I can identify jobs with a schedule I would like to work. I want to be able to filter by organizations at the same time so I can locate companies that match multiple search criteria.
