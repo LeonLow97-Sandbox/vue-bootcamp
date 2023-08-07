@@ -127,7 +127,11 @@ export const useJobsStore = defineStore('jobs', {
 
 # Pinia Getters
 
-- In Pinia, Getters are functions that allow you to retrieve **computed** values from the store's state.
+- A `getter` is a method that uses the Pinia store state to arrive at **computed/derived** data.
+- When the Pinia state updates, the `getter` will rerun. It is analogous to a `computed` component property.
+- A `getter` should not mutate the store state. That is the responsibility of an `action`.
+- Avoid duplicate data/multiple sources of truth in Pinia store. Use `getters` instead. The user's filtered jobs is a perfect use case.
+- Test `getter` methods like plain JavaScript methods. Provide an input and test for the correct output.
 - Getters are similar to computed properties in Vue components, they are used to derive values based on the current state of the store and can be considered as a form of read-only computed properties for the store.
 
 ```js
@@ -149,6 +153,22 @@ export const useJobsStore = defineStore('jobs', {
     },
   },
 });
+```
+
+## Pinia Getters in components (`JobFiltersSidebarOrganizations.vue`)
+
+- Use the `mapState` helper function to connect getters to components. They will be available on the `this` keyword.
+- Defining getter names as constants allow you to provide constants for `mapState`, reducing the chance of typos.
+
+```js
+<li v-for="organization in UNIQUE_ORGANIZATIONS" :key="organization" class="h-8 w-1/2">
+
+import { mapState, mapActions } from 'pinia'
+import { useJobsStore, UNIQUE_ORGANIZATIONS } from '@/stores/jobs'
+
+computed: {
+  ...mapState(useJobsStore, [UNIQUE_ORGANIZATIONS])
+},
 ```
 
 # Unit Testing Pinia
@@ -231,3 +251,8 @@ describe('when the user logs in', () => {
   })
 })
 ```
+
+## Testing Components with Getters (`JobFiltersSidebarOrganizations.test.js`)
+
+- In component tests, we can use a testing Pinia to replace getter methods with values.
+- For component tests, test the interaction with the Pinia store. Do not need an actual Pinia store object is a simpler JavaScript object will do.
