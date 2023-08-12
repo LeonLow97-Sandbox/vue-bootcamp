@@ -139,18 +139,18 @@ module.exports = {
 - Include fontawesome as a global variable in `main.js`
 
 ```js
-import { createApp } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { createApp } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import '@/index.css'
-import App from '@/App.vue'
+import '@/index.css';
+import App from '@/App.vue';
 
 // add fontawesome icons for our project
-library.add(faSearch)
+library.add(faSearch);
 
-createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
+createApp(App).component('font-awesome-icon', FontAwesomeIcon).mount('#app');
 ```
 
 - Including the icon in component
@@ -184,3 +184,20 @@ createApp(App).component("font-awesome-icon", FontAwesomeIcon).mount('#app')
 ## Installing Pinia Testing Library
 
 - `npm install --save-dev @pinia/testing`
+
+## TypeScript
+
+- `npm install --save-dev typescript @vue/tsconfig @vue/eslint-config-typescript @types/jsdom @types/node`
+- Add to `.eslintrc.cjs`
+  ```js
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    "@vue/eslint-config-typescript",
+    '@vue/eslint-config-prettier/skip-formatting',
+    "plugin:vitest-globals/recommended"
+  ],
+  ```
+- Rename `vite.config.js` to `vite.config.ts`
+- Add to top of the file os `vite.config.ts`
+  - `/// <reference types="vitest" />`

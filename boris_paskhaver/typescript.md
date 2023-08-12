@@ -139,6 +139,7 @@ const sum: TwoNumberMathFunc = (a, b) => a + b;
 ```ts
 // Generics
 // Creation of reusable components (functions, classes, interfaces, etc.) that can work with different data types.
+// Can substitute a data type later.
 // Example: create method to copy array, the array can have type string or type number
 const copyArray = <T>(array: T[]): T[] => [...array];
 
@@ -146,3 +147,19 @@ copyArray<number>([1, 2, 3]);
 copyArray<string>(['Leon', 'Low']);
 copyArray<boolean>([true, false]);
 ```
+
+## TypeScript Summary Notes
+
+- TypeScript is a JavaScript with types. Think of it like an enhanced version of JavaScript with type checking.
+- We can declare the **types** of various JavaScript constructs like variables, constants, parameters, return values and more.
+- TypeScript *infers* the type of a value based on its original assignment or internal logic. However, its inference is not perfect; feel free to correct it whenever it is wrong.
+- The `any` type can represent any type of value. It is an anti-pattern because it defeats the purpose of TypeScript. If you want to skip typing, consider using `unknown` instead, The `unknown` type will require a *type guard* before you perform an operation.
+- We can declare types for arrays and objects as well. The more details, the better the type checking.
+    - `string[]` is a different type than `number[]`.
+    - `{ name: string }` is a different type than `object`.
+- Declare optional object properties with the `?` symbol at the end of the property name.
+- An `interface/type` allows us to define a name for a reusable object type.
+- A `generic` is a "generic type" whose exact type will be provided later when a function is invoked. Generics allow us to craft a reusable function instead of creating a duplicate one for each possible type variation.
+
+# TypeScript with Vue
+
