@@ -98,3 +98,108 @@ const jobs = [
 
 console.log(jobs.filter((job) => job.organization === 'Microsoft'));
 ```
+
+## `ref` in Vue
+
+```js
+const { ref, computed } = require('vue');
+
+let a = ref(1); // { value: 1 }
+let b = ref(2); // { value: 2 }
+
+// computed function runs whenever `a` or `b` changes
+let c = computed(() => a.value + b.value); // now c is reactive
+
+console.log(c.value); // 3
+
+a.value = 10; // forces computed function to rerun because value of a has changed
+console.log(c.value); // 12
+
+b.value = 90;
+console.log(c.value); // 100
+```
+
+```js
+const name = ref('Leon');
+const title = computed(() => name.value + ' the Great');
+
+name.value = 'Darrel';
+console.log(title.value); // 'Darrel the Great'
+```
+
+## Object reactivity with `reactive`
+
+```js
+/*
+    {
+        value: "Leon",
+        reactiveMethods
+    }
+*/
+
+const { ref, reactive, computed } = require('vue');
+
+const person = reactive({
+  name: 'Leon',
+});
+
+const title = computed(() => person.name + ' the Great');
+console.log(title.value);
+
+person.name = 'Darrel';
+console.log(title.value);
+```
+
+## Chain reactivity with `reactive`
+
+```js
+const { reactive, computed } = require('vue');
+
+const person = reactive({
+  firstName: 'Leon',
+  lastName: 'Low',
+});
+
+const title = computed(
+  () => `${person.firstName} ${person.lastName}` + ' the Great'
+);
+
+// Tracks the length of the title (chain of reactivity)
+const titleLength = computed(() => title.value.length);
+
+console.log(title.value);
+console.log(titleLength.value);
+
+person.firstName = 'Darrel';
+person.lastName = 'Ang';
+console.log(title.value);
+console.log(titleLength.value);
+```
+
+## `toRef` and `toRefs` for Object Destructuring
+
+```js
+const { reactive, computed, toRef, toRefs } = require('vue');
+
+const person = reactive({
+  firstName: 'Leon',
+  lastName: 'Low',
+});
+
+const { firstName, lastName } = toRefs(person); // firstName = { value: "Leon" }
+
+// const firstName = toRef(person, "firstName") // returns Vue reactive object
+// const lastName = toRef(person, "lastName")
+
+// const { firstName, lastName } = person // object destructuring
+
+const title = computed(
+  () => `${firstName.value} ${lastName.value}` + ' the Great'
+);
+
+console.log(title.value);
+
+firstName.value = 'Darrel';
+lastName.value = 'Ang';
+console.log(title.value);
+```

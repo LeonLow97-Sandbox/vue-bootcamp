@@ -1,13 +1,21 @@
-// JavaScript `filter` method
+const { reactive, computed, toRef, toRefs } = require('vue')
 
-const numbers = [1, 3, 5, 7, 2, 9, 11, 6]
+const person = reactive({
+  firstName: 'Leon',
+  lastName: 'Low'
+})
 
-console.log(numbers.filter((number) => number > 6)) // Output: [7, 9, 11]
+const { firstName, lastName } = toRefs(person) // firstName = { value: "Leon" }
 
-const jobs = [
-  { title: 'Angular Developer', organization: 'Microsoft' },
-  { title: 'Programmer', organization: 'Google' },
-  { title: 'Developer', organization: 'Microsoft' }
-]
+// const firstName = toRef(person, "firstName") // returns Vue reactive object
+// const lastName = toRef(person, "lastName")
 
-console.log(jobs.filter((job) => job.organization === 'Microsoft'))
+// const { firstName, lastName } = person // object destructuring
+
+const title = computed(() => `${firstName.value} ${lastName.value}` + ' the Great')
+
+console.log(title.value)
+
+firstName.value = 'Darrel'
+lastName.value = 'Ang'
+console.log(title.value)

@@ -778,6 +778,8 @@ it('changes action verb at a consistent interval', () => {
 - We can use factory functions to generate complex objects for our tests. We can design them in such a way that our tests can specify the unique properties they care about.
 
 ```js
+import { RouterLinkStub } from '@vue/test-utils'
+
 const createJobProps = (jobProps = {}) => ({
   title: 'Vue Developer',
   organization: 'AirBnB',
