@@ -29,3 +29,104 @@
     - Issue 2: Difficult to reuse logic across components. Vue offered mixins in Version 2 but they are considered an anti-pattern.
 - The Composition API bundles together all component logic in a single setup method that is part of the Vue configuration object.
 - The HTML template syntax (like Vue directives `v-on`, `v-if`, ...) and Vue object properties (props, components, etc.) doesn't change.
+- The Composition API offers a new way to build Vue components. It *complements* the existing Options API.
+
+## Defining Composition API
+
+- We define all our logic in a `setup` method or `<script setup>` section in the component file. The latter is recommended by the Vue team.
+
+---
+#### `setup` method
+```vue
+<script>
+import { computed, defineProps } from 'vue'
+
+export default {
+  props: {
+    text: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      required: false,
+      default: 'primary',
+      validator(value) {
+        return ['primary', 'secondary'].includes(value)
+      }
+    }
+  },
+  setup(props) {
+    const buttonClass = computed(() => {
+      return {
+        [props.type]: true
+      }
+    })
+
+    return {
+      buttonClass
+    }
+  }
+}
+</script>
+```
+---
+#### `<script setup>` method
+```vue
+<script setup>
+import { computed, toRefs } from 'vue'
+
+const props = defineProps({
+  text: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: false,
+    default: 'primary', // if parent component does not provide
+    validator(value) {
+      return ['primary', 'secondary'].includes(value)
+    }
+  }
+})
+
+const { type } = toRefs(props) // object destructuring with reactivity by using `toRefs`
+
+const buttonClass = computed(() => {
+  return {
+    [type.value]: true
+  }
+})
+</script>
+```
+---
+
+## Replacing `computed` properties
+
+- Use the `computed` function to re-run logic whenever a reactive piece of state changes. Pass a function as an argument.
+- Vue will re-invoke the function whenever a piece of state referenced inside it updates. This is analogous to `computed` properties in the **Options API**.
+
+## Receiving Props in the Setup method
+
+- The `setup` method receives a reactive object of `props` as its first argument. 
+
+`setup(props) {}`
+
+- Can utilize those props (for example, to compute CSS classes).
+- The `props` object is reactive but its individual properties are not. Pass the `props` object to the `toRefs` function to return an object with all reactive properties.
+- Can destructure properties from the object returned by `toRefs`. Remember that the properties are not individual reactive objects. Thus, must access `.value` when using them in JavaScript.
+- When you use reactive objects in HTML, Vue knows to extract their underlying value. Thus, no need to add `.value`.
+
+```js
+// Without toRefs
+[props.type]: true
+
+// With toRefs
+const { type } = toRefs(props)
+[type.value]: true
+```
+
+- When using `<script setup>`, use the `defineProps` function to define props validation.
+- The function will return the `props` object if you want to use it elsewhere in the section.
+- We do not have to return an object with `<script setup>`. Our top-level names are available for use within the template.
