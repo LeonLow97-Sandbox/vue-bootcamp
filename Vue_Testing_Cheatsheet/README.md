@@ -41,6 +41,30 @@ render(HeaderContainer, {
 expect(screen.getByText('Some Title')).toBeInTheDocument();
 ```
 
+## Search Variants in `screen` or `render`
+
+|                 | Return if no match | Return if 1 match | Return if >1 match | Await? |
+| --------------- | ------------------ | ----------------- | ------------------ | ------ |
+| `getBy...`      | throw              | return            | throw              | No     |
+| `findBy...`     | throw              | return            | throw              | Yes    |
+| `queryBy...`    | `null`             | return            | throw              | No     |
+| `getAllBy...`   | throw              | array             | array              | No     |
+| `findAllBy...`  | throw              | array             | array              | Yes    |
+| `queryAllBy...` | []                 | array             | array              | No     |
+
+## Search Types in `screen` or `render`
+
+|                        | finds by...                      | DOM Example                           |
+| ---------------------- | -------------------------------- | ------------------------------------- |
+| `...ByLabelText`       | label or aria-label content      | `<label for ="element" />             |
+| `...ByPlaceholderText` | input placeholder value          | `<input placeholder="name" />`        |
+| `...ByText`            | element text content             | `<p>Lorem ipsum</p>`                  |
+| `...ByDisplayValue`    | form element current value       | Current value of input element        |
+| `...ByAltText`         | img alt attribute                | `<img alt="movie poster" />`          |
+| `...ByTitle`           | title attribute or svg title tag | `<span title="Add" />` or `<title />` |
+| `...ByRole`            | ARIA role                        | `<div role="dialog" />`               |
+| `...ByTestId`          | data-testid attribute            | `<div data-testid="some-message" />`  |
+
 ### `expect`
 
 - [Vitest expect](https://vitest.dev/api/expect.html)
