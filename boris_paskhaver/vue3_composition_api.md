@@ -194,3 +194,61 @@ describe('when user is on jobs page', () => {
   });
 });
 ```
+
+## Lifecycle Hooks with Composition API (`SpotLight.vue`)
+
+- Vue includes helper functions for reacting to lifecycle hooks.
+- We used `onMounted`, which runs the function we pass to it when the component mounts.
+
+```vue
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const spotlights = ref([]);
+
+const getSpotlights = async () => {
+  const baseUrl = import.meta.env.VITE_APP_API_URL;
+  const url = `${baseUrl}/spotlights`;
+  const response = await axios.get(url);
+  spotlights.value = response.data;
+};
+
+onMounted(getSpotlights);
+</script>
+```
+
+## Custom Composables
+
+- A `composable` is a function that returns **reactive** state.
+- Can test the composable independently of a component. Stick with simple JavaScript objects when mocking out composable functions in component tests.
+- When returning reactive/computed values from a composable, remember to access the `value` property where it is being used.
+- Be mindful of reactive objects versus objects with reactive properties.
+
+```js
+// Composable - usePreviousAndNextPages.js
+const usePreviousAndNextPages = (currentPage, maxPage) => {
+  const previousPage = computed(() => {
+    const previousPage = currentPage.value - 1;
+    const firstPage = 1;
+    return previousPage >= firstPage ? previousPage : undefined;
+  });
+
+  const nextPage = computed(() => {
+    const nextPage = currentPage.value + 1;
+    return nextPage <= maxPage.value ? nextPage : undefined;
+  });
+
+  return { previousPage, nextPage };
+};
+
+// JobListings.vue
+const currentPage = computed(() => Number.parseInt(route.query.page || '1'));
+const FILTERED_JOBS = computed(() => jobsStore.FILTERED_JOBS);
+const maxPage = computed(() => Math.ceil(FILTERED_JOBS.value.length / 10));
+
+const { previousPage, nextPage } = usePreviousAndNextPages(
+  currentPage,
+  maxPage
+);
+```
