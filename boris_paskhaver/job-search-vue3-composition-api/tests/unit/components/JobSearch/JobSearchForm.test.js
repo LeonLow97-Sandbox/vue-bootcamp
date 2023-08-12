@@ -1,47 +1,50 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
+import { useRouter } from 'vue-router'
+
 import JobSearchForm from '@/components/JobSearch/JobSearchForm.vue'
+
+vi.mock('vue-router')
 
 describe('JobSearchForm', () => {
   describe('when user submits form', () => {
     it("directs user to job results page with user's search parameters", async () => {
       // mocking this.$router.push
       const push = vi.fn()
-      const $router = { push }
+      // const $router = { push }
+      useRouter.mockReturnValue({ push })
 
       render(JobSearchForm, {
         global: {
-          mocks: {
-            $router
-          },
           stubs: {
             FontAwesomeIcon: true
           }
         }
       })
 
-      const roleInput = screen.getByRole("textbox", {
+      const roleInput = screen.getByRole('textbox', {
         name: /role/i
       })
 
-      await userEvent.type(roleInput, "Vue Developer")
+      await userEvent.type(roleInput, 'Vue Developer')
 
-      const locationInput = screen.getByRole("textbox", {
+      const locationInput = screen.getByRole('textbox', {
         name: /where?/i
       })
 
-      await userEvent.type(locationInput, "Singapore")
+      await userEvent.type(locationInput, 'Singapore')
 
-      const submitButton = screen.getByRole("button", {
-        name: /search/i,
+      const submitButton = screen.getByRole('button', {
+        name: /search/i
       })
       await userEvent.click(submitButton)
 
       expect(push).toHaveBeenCalledWith({
-        name: "JobResults",
+        name: 'JobResults',
         query: {
-            role: "Vue Developer", location: "Singapore"
+          role: 'Vue Developer',
+          location: 'Singapore'
         }
       })
     })
