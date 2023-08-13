@@ -152,11 +152,11 @@ copyArray<boolean>([true, false]);
 
 - TypeScript is a JavaScript with types. Think of it like an enhanced version of JavaScript with type checking.
 - We can declare the **types** of various JavaScript constructs like variables, constants, parameters, return values and more.
-- TypeScript *infers* the type of a value based on its original assignment or internal logic. However, its inference is not perfect; feel free to correct it whenever it is wrong.
-- The `any` type can represent any type of value. It is an anti-pattern because it defeats the purpose of TypeScript. If you want to skip typing, consider using `unknown` instead, The `unknown` type will require a *type guard* before you perform an operation.
+- TypeScript _infers_ the type of a value based on its original assignment or internal logic. However, its inference is not perfect; feel free to correct it whenever it is wrong.
+- The `any` type can represent any type of value. It is an anti-pattern because it defeats the purpose of TypeScript. If you want to skip typing, consider using `unknown` instead, The `unknown` type will require a _type guard_ before you perform an operation.
 - We can declare types for arrays and objects as well. The more details, the better the type checking.
-    - `string[]` is a different type than `number[]`.
-    - `{ name: string }` is a different type than `object`.
+  - `string[]` is a different type than `number[]`.
+  - `{ name: string }` is a different type than `object`.
 - Declare optional object properties with the `?` symbol at the end of the property name.
 - An `interface/type` allows us to define a name for a reusable object type.
 - A `generic` is a "generic type" whose exact type will be provided later when a function is invoked. Generics allow us to craft a reusable function instead of creating a duplicate one for each possible type variation.
@@ -164,31 +164,99 @@ copyArray<boolean>([true, false]);
 # TypeScript with Vue
 
 - TypeScript projects have a `tsconfig.json` file at the top. They also require us to setup additional values (ESLint, file references, etc).
+- Can use `interfaces` to define complex object types such as Job and our Pinia store states. (`@/api/types.ts`)
+- When we convert JavaScript files to TypeScript, we may encounter violations. TS will inform you when it is unsure of what type it's working with.
 
 ## Partial Functions
 
+- The `Partial` type accepts a generic argument (type argument). It creates a new type where all the properties of the original type are optional.
+  - `Partial<Job>`
+- The `Partial` type can assist with factory functions in TypeScript.
 - The `Job` type has many other properties. By using `Partial`, it makes all the properties in `Job` type optional but we cannot modify/add new properties.
 - An empty object `{}` fulfils a `Partial` job type.
 
 ```ts
-import type { Job } from '@/api/types'
+import type { Job } from '@/api/types';
 
-const state1: Partial<Job> = {}
+const state1: Partial<Job> = {};
 
 const state2: Partial<Job> = {
-  organization: 'Microsoft'
-}
+  organization: 'Microsoft',
+};
 
 const state3: Partial<Job> = {
   organization: 'Microsoft',
-  jobType: 'Full-Time'
-}
+  jobType: 'Full-Time',
+};
 
 const invalidState: Partial<Job> = {
-  a: 5
-}
+  a: 5,
+};
 ```
 
 # Unit Testing
 
-## 
+## TypeScript and Mocks (E.g., `axios.get`)
+
+- TypeScript does not understand that `vi.mock` replaces an implementation with a Vitest mock function.
+- Can use the `as` keyword to tell TS to treat a value as having a different type.
+  - `const axiosGetMock = axios.get as Mock`
+
+```ts
+import type { Mock } from 'vitest';
+import axios from 'axios';
+
+vi.mock('axios');
+const axiosGetMock = axios.get as Mock;
+```
+
+## Unit Testing with composables
+
+- Informing TypeScript that currentPage and maxPage are reactive properties with type `number`.
+
+```ts
+import { type Ref, computed } from 'vue'
+
+const usePreviousAndNextPages = (currentPage: Ref<number>, maxPage: Ref<number>) => {...}
+```
+
+## Unit Testing with `Partial`
+
+- Using `Partial` to make specifying other properties in the type `Job` optional.
+- We could either create a helper function like `createJob` or mock the jobs with `as Job[]` as shown below.
+
+```ts
+const createJob = (job: Partial<Job> = {}): Job => ({
+  id: 1,
+  title: 'Angular Developer',
+  organization: 'Vue and Me',
+  degree: "Master's",
+  jobType: 'Intern',
+  locations: ['Lisbon'],
+  minimumQualifications: ['Mesh granular deliverables'],
+  preferredQualifications: ['Mesh wireless metrics'],
+  description: ['Away someone forget effect wait land.'],
+  dateAdded: '2021-07-04',
+  ...job,
+});
+
+describe('UNIQUE_ORGANIZATIONS', () => {
+  it('finds unique organizations from list of jobs', () => {
+    const store = useJobsStore();
+    store.jobs = [
+      createJob({ organization: 'Google' }),
+      createJob({ organization: 'Amazon' }),
+      createJob({ organization: 'Google' }),
+    ];
+    
+    // store.jobs = [
+    //   { organization: 'Google' },
+    //   { organization: 'Amazon' },
+    //   { organization: 'Google' }
+    // ] as Job[]
+
+    const result = store.UNIQUE_ORGANIZATIONS;
+    expect(result).toEqual(new Set(['Google', 'Amazon']));
+  });
+});
+```
