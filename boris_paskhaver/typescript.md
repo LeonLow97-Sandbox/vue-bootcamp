@@ -196,7 +196,9 @@ const invalidState: Partial<Job> = {
 
 ## Adding TypeScript with Vue
 
-- `<script lang="ts">` and `defineComponent`
+- Add a `lang` attribute set to `"ts"` to the `<script>` tag.
+- If using the **Options API**, import the `defineComponent` function from Vue and pass the component configuration object into it.
+- If using the **Composition API**, can use either `setup` or return an object with named properties.
 
 ```ts
 // Vue 2
@@ -258,15 +260,26 @@ export default defineComponent({
 - In the example below, TS does not know the type of `route.query.page` so we include `as string` to tell TypeScript to trust us that it will be of type `string`.
 
 ```ts
-const currentPage = computed(() => Number.parseInt((route.query.page as string) || '1'))
+const currentPage = computed(() =>
+  Number.parseInt((route.query.page as string) || '1')
+);
+```
+
+## Axios Response
+
+- `axios.get` accepts a generic type argument that represents the **object type of the API response**.
+
+```ts
+const response = await axios.get<Job[]>(url);
 ```
 
 # Unit Testing
 
 ## TypeScript and Mocks (E.g., `axios.get`)
 
+- Mocking out axios.
 - TypeScript does not understand that `vi.mock` replaces an implementation with a Vitest mock function.
-- Can use the `as` keyword to tell TS to treat a value as having a different type.
+- Can use the `as` keyword to tell TS that an imported function/class/etc. is of type `Mock` from `vitest`.
   - `const axiosGetMock = axios.get as Mock`
 
 ```ts
@@ -336,5 +349,5 @@ describe('UNIQUE_ORGANIZATIONS', () => {
 
 ```ts
 // @ts-expect-error: Getter is read only
-jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
+jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({});
 ```
