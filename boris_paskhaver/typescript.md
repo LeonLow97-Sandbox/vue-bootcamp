@@ -163,3 +163,32 @@ copyArray<boolean>([true, false]);
 
 # TypeScript with Vue
 
+- TypeScript projects have a `tsconfig.json` file at the top. They also require us to setup additional values (ESLint, file references, etc).
+
+## Partial Functions
+
+- The `Job` type has many other properties. By using `Partial`, it makes all the properties in `Job` type optional but we cannot modify/add new properties.
+- An empty object `{}` fulfils a `Partial` job type.
+
+```ts
+import type { Job } from '@/api/types'
+
+const state1: Partial<Job> = {}
+
+const state2: Partial<Job> = {
+  organization: 'Microsoft'
+}
+
+const state3: Partial<Job> = {
+  organization: 'Microsoft',
+  jobType: 'Full-Time'
+}
+
+const invalidState: Partial<Job> = {
+  a: 5
+}
+```
+
+# Unit Testing
+
+## 
