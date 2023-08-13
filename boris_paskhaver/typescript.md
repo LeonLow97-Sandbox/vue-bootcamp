@@ -194,6 +194,73 @@ const invalidState: Partial<Job> = {
 };
 ```
 
+## Adding TypeScript with Vue
+
+- `<script lang="ts">` and `defineComponent`
+
+```ts
+// Vue 2
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ProfileImage',
+  data() {
+    return {
+      imageLink:
+        'https://www.pngitem.com/pimgs/m/487-4876417_link-head-png-toon-link-face-png-transparent.png'
+    }
+  }
+})
+</script>
+```
+
+```ts
+// Vue 3
+<script lang="ts" setup>
+  import {ref} from 'vue' const imageLink = ref(
+  'https://www.pngitem.com/pimgs/m/487-4876417_link-head-png-toon-link-face-png-transparent.png'
+  )
+</script>
+```
+
+## Adding TypeScript to Event Handlers in Vue 2
+
+```ts
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'TextInput',
+  props: {
+    modelValue: {
+      type: String,
+      required: true
+    }
+  },
+  emits: ['update:modelValue'],
+  methods: {
+    handleInput($event: Event) {
+      const target = $event.target as HTMLInputElement
+      // passing value from Child component to Parent component
+      // the payload in this event is `this.value`
+      this.$emit('update:modelValue', target.value)
+    }
+  }
+})
+</script>
+
+```
+
+## Type Assertion
+
+- The `as` keyword is used for **type assertion** in TypeScript.
+- In the example below, TS does not know the type of `route.query.page` so we include `as string` to tell TypeScript to trust us that it will be of type `string`.
+
+```ts
+const currentPage = computed(() => Number.parseInt((route.query.page as string) || '1'))
+```
+
 # Unit Testing
 
 ## TypeScript and Mocks (E.g., `axios.get`)
@@ -248,7 +315,7 @@ describe('UNIQUE_ORGANIZATIONS', () => {
       createJob({ organization: 'Amazon' }),
       createJob({ organization: 'Google' }),
     ];
-    
+
     // store.jobs = [
     //   { organization: 'Google' },
     //   { organization: 'Amazon' },
@@ -259,4 +326,15 @@ describe('UNIQUE_ORGANIZATIONS', () => {
     expect(result).toEqual(new Set(['Google', 'Amazon']));
   });
 });
+```
+
+## Unit Testing with Pinia
+
+- TypeScript informs us that we cannot change the value in Pinia store directly like this `jobsStore.FILTERED_JOBS` but for the purpose of testing, it should be done this way.
+- Getters are not writable!
+- Thus, add `// @ts-expect-error` to inform TS that this error is expected.
+
+```ts
+// @ts-expect-error: Getter is read only
+jobsStore.FILTERED_JOBS = Array(numberOfJobs).fill({})
 ```
