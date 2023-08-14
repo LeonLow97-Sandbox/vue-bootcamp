@@ -264,6 +264,10 @@ describe('actions', () => {
 });
 ```
 
+## `$onAction` method
+
+- 
+
 #### Unit Testing components that utilize Pinia store
 
 - `const pinia = createTestingPinia({stubActions: false});`

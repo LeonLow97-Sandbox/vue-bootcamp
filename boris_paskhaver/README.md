@@ -883,3 +883,4 @@ it('shows link to previous page', async () => {
 - [`Pinia`] As a user, I would like to filter jobs by job type (full time, part time, etc) so that I can identify jobs with a schedule I would like to work. I want to be able to filter by organizations at the same time so I can locate companies that match multiple search criteria.
 - [TypeScript] As a user, I would like to filter jobs by my level of education so that I can apply to positions for which I am qualified.
 - [TypeScript + Pinia] As a user, I would like to be able to clear all my job filters so I can start a fresh start from scratch with minimal effort.
+- [TypeScript + Pinia] As a user, I would like to search for a technical skill that I know so that I can find jobs that fit my specialization.
