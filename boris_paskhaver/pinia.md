@@ -205,27 +205,29 @@ computed: {
 - Return an object with the reactive state, functions, and getters to expose to components.
 
 ```ts
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 
-import getDegrees from '@/api/getDegrees'
-import type { Degree } from '@/api/types'
+import getDegrees from '@/api/getDegrees';
+import type { Degree } from '@/api/types';
 
 export const useDegreesStore = defineStore('degrees', () => {
   // state
-  const degrees = ref<Degree[]>([])
+  const degrees = ref<Degree[]>([]);
 
   // actions
   const FETCH_DEGREES = async () => {
-    const receivedDegrees = await getDegrees()
-    degrees.value = receivedDegrees
-  }
+    const receivedDegrees = await getDegrees();
+    degrees.value = receivedDegrees;
+  };
 
   // Getter
-  const UNIQUE_DEGREES = computed(() => degrees.value.map((degree) => degree.degree))
+  const UNIQUE_DEGREES = computed(() =>
+    degrees.value.map((degree) => degree.degree)
+  );
 
-  return { degrees, FETCH_DEGREES, UNIQUE_DEGREES }
-})
+  return { degrees, FETCH_DEGREES, UNIQUE_DEGREES };
+});
 ```
 
 # Unit Testing Pinia
@@ -266,7 +268,23 @@ describe('actions', () => {
 
 ## `$onAction` method
 
-- 
+-
+
+## Different way to connect to Pinia store
+
+```ts
+// Connecting with the Pinia store instead of using $onAction
+const skillsSearchTerm = computed({
+  // reading from pinia state to this component template
+  get() {
+    return userStore.skillsSearchTerm;
+  },
+  // writing from component template to pinia state
+  set(value: string) {
+    userStore.UPDATE_SKILLS_SEARCH_TERM(value);
+  },
+});
+```
 
 #### Unit Testing components that utilize Pinia store
 
