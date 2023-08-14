@@ -778,7 +778,7 @@ it('changes action verb at a consistent interval', () => {
 - We can use factory functions to generate complex objects for our tests. We can design them in such a way that our tests can specify the unique properties they care about.
 
 ```js
-import { RouterLinkStub } from '@vue/test-utils'
+import { RouterLinkStub } from '@vue/test-utils';
 
 const createJobProps = (jobProps = {}) => ({
   title: 'Vue Developer',
@@ -881,3 +881,4 @@ it('shows link to previous page', async () => {
 - [`Dynamic Pagination`] As a user, I would like to navigate between multiple pages of job listings so that I am not overwhelmed by the content on my screen.
 - [`Pinia`] As a user, I would like to **filter** jobs by organizations so that I can discover opportunities in the companies that I am excited to work for.
 - [`Pinia`] As a user, I would like to filter jobs by job type (full time, part time, etc) so that I can identify jobs with a schedule I would like to work. I want to be able to filter by organizations at the same time so I can locate companies that match multiple search criteria.
+- [TypeScript] As a user, I would like to filter jobs by my level of education so that I can apply to positions for which I am qualified.
