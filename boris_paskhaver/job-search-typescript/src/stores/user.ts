@@ -6,13 +6,6 @@ export const ADD_SELECTED_JOB_TYPES = 'ADD_SELECTED_JOB_TYPES'
 export const ADD_SELECTED_DEGREES = 'ADD_SELECTED_DEGREES'
 export const CLEAR_USER_JOB_FILTER_SELECTIONS = 'CLEAR_USER_JOB_FILTER_SELECTIONS'
 
-export interface UserState {
-  isLoggedIn: boolean
-  selectedOrganizations: string[]
-  selectedJobTypes: string[]
-  selectedDegrees: string[]
-}
-
 export const useUserStore = defineStore('user', () => {
   // state
   const isLoggedIn = ref(false)
