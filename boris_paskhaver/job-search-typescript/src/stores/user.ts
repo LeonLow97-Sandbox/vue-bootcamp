@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', () => {
   const selectedOrganizations = ref<string[]>([])
   const selectedJobTypes = ref<string[]>([])
   const selectedDegrees = ref<string[]>([])
-  const skillsSearchTerm = ref("")
+  const skillsSearchTerm = ref('')
 
   // actions
   const LOGIN_USER = () => {
@@ -39,6 +39,7 @@ export const useUserStore = defineStore('user', () => {
     selectedDegrees.value = []
     selectedJobTypes.value = []
     selectedOrganizations.value = []
+    skillsSearchTerm.value = ''
   }
 
   return {

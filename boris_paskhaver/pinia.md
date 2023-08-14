@@ -266,11 +266,30 @@ describe('actions', () => {
 });
 ```
 
-## `$onAction` method
+## `$onAction` method (`JobFiltersSidebarCheckboxGroup.vue`)
 
--
+- The `$onAction` method on a Pinia store allows us to monitor actions within a component and perform side effects.
+  - Could be due to the presence of multiple sources of truth or the need to synchronize different parts of your application.
+- Make sure to validate the action that you want to react to stay efficient.
+- Reacting to side effects may be a sign that your design can be improved.
+
+```ts
+userStore.$onAction(({ after, name }) => {
+  // another logic to run "after" the action in the Pinia store runs
+  after(() => {
+    // check if the correct action ran
+    if (name === CLEAR_USER_JOB_FILTER_SELECTIONS) {
+      selectedValues.value = [];
+    }
+  });
+});
+```
 
 ## Different way to connect to Pinia store
+
+- The `computed` function accepts an object with a `get` and `set` method.
+- In the `get` method, we declare the logic for determining the current (reactive) value.
+- In the `set` method, we declare the logic for setting the next value.
 
 ```ts
 // Connecting with the Pinia store instead of using $onAction
@@ -284,6 +303,15 @@ const skillsSearchTerm = computed({
     userStore.UPDATE_SKILLS_SEARCH_TERM(value);
   },
 });
+```
+
+## Input Modifiers
+
+- The `lazy` input modifier updates the data when the user stops typing or clicks out of the input. We used this to reduce the number of actions the app dispatches to the store, better UI performance.
+- The `trim` input modifier removes whitespace from both ends of the text input.
+
+```ts
+v-model.lazy.trim="skillsSearchTerm"
 ```
 
 #### Unit Testing components that utilize Pinia store
