@@ -1,6 +1,7 @@
 # <div id="content">Content</div>
 
 - <a href="#VueJS">VueJS</a>
+  - [Watch Property](#watch-property)
 - <a href="#directives">Vue Directives</a>
 - <a href="#unit_testing">Unit Testing (Vitest)</a>
 - <a href="#user_stories">User Stories</a>
@@ -54,7 +55,7 @@
 ```html
 <script>
   export default {
-    name: 'MainNav',
+    name: "MainNav",
   };
 </script>
 ```
@@ -157,6 +158,68 @@ export default {
 }
 </script>
 ```
+
+## `watch` property
+
+- In Vue 3, the `watch` API is a powerful feature that allows you to **perform side effects** in response to **changes in reactive data**.
+- Useful when you need to react to changes in data properties or computed properties, enabling you to execute code in response to these changes.
+
+```js
+import { watch } from "vue";
+watch(source, callback, options);
+```
+
+- `source`: the reactive data or computed property you want to watch. It can be a signal ref, an array of refs, or a function that returns a value.
+- `callback`: a function that will be executed when the watched source changes. It receives the new value and the old value as arguments.
+- `options`: an optional object that can include properties like `immediate` (to run the callback immediately on component creation) and `deep` (to watch nested properties).
+
+---
+### Use cases
+
+1. **Performing Side Effects**:
+  - You can perform tasks such as API calls, logging, or manipulating the DOM in response to data changes.
+    - Manipulating the DOM refers to the process of changing the structure, style, or content of a webpage using JavaScript.
+2. **Form Validation**
+  - Monitor form inputs and perform validation whenever the input values change.
+3. **Reacting to Complex Data Structures**
+  - When watching nested properties, you can use `deep` option to ensure that changes within nested objects are tracked.
+  - Nested properties refer to properties within an object that are themselves objects or arrays. When you have a reactive object with multiple levels of depth, you might want to watch for changes not just at the top level but also within those nested properties.
+  ```js
+  import { ref, watch } from 'vue';
+  export default {
+    setup() {
+      const userProfile = ref({
+        name: 'John Doe',
+        address: {
+          city: 'New York',
+          country: 'USA'
+        }
+      });
+      watch(userProfile, (newValue, oldValue) => {
+        console.log('User profile changed:', newValue);
+      }, { deep: true });
+      return { userProfile };
+    }
+  };
+  ```
+4. **Synchronization with External Libraries**:
+  - When using libraries that require synchronization (like charting libraries), you can update the charts whenever relevant data changes.
+5. **Conditional Logic**:
+  - Trigger different actions based on specific when the watched property changes.
+6. **Cleanup on Component Unmount**:
+  - You can also handle cleanup in the watch callback by returning a function. This is useful for cases like removing event listeners.
+  ```js
+  watch(someData, (newValue, oldValue) => {
+    // Set up side effects
+    const handler = someEvent => { /* ... */ };
+    window.addEventListener('someEvent', handler);
+    return () => {
+      // Cleanup logic
+      window.removeEventListener('someEvent', handler);
+    };
+  });
+  ```
+---
 
 ## CSS Class
 
@@ -324,8 +387,8 @@ methods: {
 ```js
 const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: "/",
+    name: "Home",
     component: HomeView,
   },
 ];
@@ -443,10 +506,10 @@ render(JobSearchForm, {
 <a v-bind:href="url">Leon Careers</a>;
 
 export default {
-  name: 'MainNav',
+  name: "MainNav",
   data() {
     return {
-      url: 'https://careers.google.com',
+      url: "https://careers.google.com",
     };
   },
 };
@@ -582,12 +645,12 @@ export default {
 ## Vue Testing Library
 
 ```js
-import { render, screen } from '@testing-library/vue';
+import { render, screen } from "@testing-library/vue";
 
-import MainNav from '@/components/MainNav.vue';
+import MainNav from "@/components/MainNav.vue";
 
-describe('MainNav', () => {
-  it('displays company name', () => {
+describe("MainNav", () => {
+  it("displays company name", () => {
     render(MainNav);
     screen.debug();
   });
@@ -601,7 +664,7 @@ describe('MainNav', () => {
 
 ```js
 render(MainNav);
-const companyName = screen.getByText('Leon Careers');
+const companyName = screen.getByText("Leon Careers");
 expect(companyName).toBeInTheDocument(); // querying that the company name is in the DOM
 ```
 
@@ -611,7 +674,7 @@ expect(companyName).toBeInTheDocument(); // querying that the company name is in
 render(MainNav, {
   data() {
     return {
-      company: 'Leon Careers',
+      company: "Leon Careers",
     };
   },
 });
@@ -641,9 +704,9 @@ render(MainNav, {
 ## Unit Testing of ARIA Roles
 
 ```js
-it('displays menu items for navigation', () => {
+it("displays menu items for navigation", () => {
   render(MainNav);
-  screen.getAllByRole('listitem');
+  screen.getAllByRole("listitem");
 });
 ```
 
@@ -653,20 +716,20 @@ it('displays menu items for navigation', () => {
 - The event methods are _asynchronous_. They return a Promise. Use `async/await` syntax for the `it` function.
 
 ```js
-it('displays user profile picture', async () => {
+it("displays user profile picture", async () => {
   render(MainNav);
 
-  let profileImage = screen.queryByRole('img', {
+  let profileImage = screen.queryByRole("img", {
     name: /user profile image/i,
   });
   expect(profileImage).not.toBeInTheDocument();
 
-  const loginButton = screen.getByRole('button', {
+  const loginButton = screen.getByRole("button", {
     name: /sign in/i,
   });
   await userEvent.click(loginButton); // simulating login button click with await
 
-  profileImage = screen.getByRole('img', {
+  profileImage = screen.getByRole("img", {
     name: /user profile image/i,
   });
   expect(profileImage).toBeInTheDocument();
@@ -676,18 +739,18 @@ it('displays user profile picture', async () => {
 ## Unit Testing on CSS classes
 
 ```js
-it('applies one of several styles to button', () => {
+it("applies one of several styles to button", () => {
   render(ActionButton, {
     props: {
-      text: 'Click Me',
-      type: 'primary',
+      text: "Click Me",
+      type: "primary",
     },
   });
 
-  const button = screen.getByRole('button', {
+  const button = screen.getByRole("button", {
     name: /Click Me/i,
   });
-  expect(button).toHaveClass('primary'); // testing CSS class name
+  expect(button).toHaveClass("primary"); // testing CSS class name
 });
 ```
 
@@ -721,8 +784,8 @@ render(TheSubnav, {
 - The Vitest mock function `vi.fn()` "mocks out" a real function. We use it as a stand-in or a replacement for a real function that we do not want to involve in our tests.
 
 ```js
-describe('Vitest playground', () => {
-  it('tracks whether it has been called', () => {
+describe("Vitest playground", () => {
+  it("tracks whether it has been called", () => {
     const mockFunction = vi.fn();
     mockFunction(1, 2);
     expect(mockFunction).toHaveBeenCalledWith(1, 2);
@@ -747,11 +810,11 @@ describe('Vitest playground', () => {
 ## Testing `time-related` operations
 
 ```js
-it('displays introductory action verb', () => {
+it("displays introductory action verb", () => {
   vi.useFakeTimers(); // use fake timers to control time-related operations
   render(TheHeadline);
 
-  const actionPhrase = screen.getByRole('heading', {
+  const actionPhrase = screen.getByRole("heading", {
     name: /build for everyone/i,
   });
   expect(actionPhrase).toBeInTheDocument();
@@ -759,10 +822,10 @@ it('displays introductory action verb', () => {
   vi.useRealTimers(); // clean up function for timers (reset to JavaScript timer)
 });
 
-it('changes action verb at a consistent interval', () => {
+it("changes action verb at a consistent interval", () => {
   vi.useFakeTimers();
   const mock = vi.fn(); // creating a mock function
-  vi.stubGlobal('setInterval', mock); // replacing global name with whatever we want
+  vi.stubGlobal("setInterval", mock); // replacing global name with whatever we want
 
   render(TheHeadline);
 
@@ -778,13 +841,13 @@ it('changes action verb at a consistent interval', () => {
 - We can use factory functions to generate complex objects for our tests. We can design them in such a way that our tests can specify the unique properties they care about.
 
 ```js
-import { RouterLinkStub } from '@vue/test-utils';
+import { RouterLinkStub } from "@vue/test-utils";
 
 const createJobProps = (jobProps = {}) => ({
-  title: 'Vue Developer',
-  organization: 'AirBnB',
-  locations: ['Singapore'],
-  minimumQualifications: ['Code'],
+  title: "Vue Developer",
+  organization: "AirBnB",
+  locations: ["Singapore"],
+  minimumQualifications: ["Code"],
   ...jobProps,
 });
 
@@ -792,7 +855,7 @@ const renderJobListing = (jobProps) => {
   render(JobListing, {
     global: {
       stubs: {
-        'router-link': RouterLinkStub,
+        "router-link": RouterLinkStub,
       },
     },
     props: {
@@ -804,7 +867,7 @@ const renderJobListing = (jobProps) => {
 };
 
 // In Test
-const job = createJob({ title: 'Software Engineer', organization: 'Google' });
+const job = createJob({ title: "Software Engineer", organization: "Google" });
 ```
 
 ## Mocking out Libraries - Axios (`JobListings.test.js`)
@@ -813,8 +876,8 @@ const job = createJob({ title: 'Software Engineer', organization: 'Google' });
 - Rather, we can instruct Vitest to mock out a dependency (like Axios). Vitest will replace all of an object's methods with mock functions.
 
 ```js
-import axios from 'axios';
-vi.mock('axios');
+import axios from "axios";
+vi.mock("axios");
 
 axios.get.mockResolvedValue({ data: [] });
 ```
@@ -853,16 +916,16 @@ axios.get.mockResolvedValue({ data: [] });
 
 ```js
 // Unit Test
-it('shows link to previous page', async () => {
+it("shows link to previous page", async () => {
   axios.get.mockResolvedValue({ data: Array(15).fill({}) });
-  const queryParams = { page: '2' };
+  const queryParams = { page: "2" };
   const $route = createRoute(queryParams);
 
   renderJobListings($route);
 
-  await screen.findAllByRole('listitem');
+  await screen.findAllByRole("listitem");
 
-  const previousLink = screen.queryByRole('link', { name: /previous/i });
+  const previousLink = screen.queryByRole("link", { name: /previous/i });
   expect(previousLink).toBeInTheDocument();
 });
 ```
